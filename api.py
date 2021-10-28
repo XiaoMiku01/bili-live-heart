@@ -231,9 +231,9 @@ class WebApi:
 
     @classmethod
     async def secret_player(cls, session: ClientSession, csrf):
-        url = 'https://api.bilibili.com/x/relation/batch/modify'
+        url = 'https://api.bilibili.com/x/relation/modify'
         data = {
-            "fids": ','.join(['672342685', '672346917', '672328094', '351609538', '672353429']),
+            "fid": random.choice(['672342685', '672346917', '672328094', '351609538', '672353429']),
             "act": 1,
             "re_src": 11,
             "csrf": csrf

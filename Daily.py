@@ -31,7 +31,6 @@ class Live:
             self.room_id = (await WebApi.get_room_id(session, self.ruid))['roomid']
             hearts = [g for g in (await WebApi.get_gift(session)) if (g['gift_name'] == "小心心")]
             if not hearts:
-                self.message += "在背包里未发现小心心"
                 raise Exception(self.message)
             try:
                 sign = await WebApi.do_sign(session)
@@ -53,7 +52,11 @@ class Live:
             self.message += medal_msg
         except Exception as e:
             self.message += f"自动打卡出错：{repr(e)}"
-        await WebApi.secret_player(session, self.csrf)
+        try:
+            await WebApi.secret_player(session, self.csrf)
+            pass
+        except Exception:
+            pass
         await session.close()
         if self.sendkey:
             await self.ServerChan()
