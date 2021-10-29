@@ -41,6 +41,8 @@ class Live:
             self.message += "弹幕打卡成功\n"
             heart_num = 0
             for i in range(len(hearts)):
+                if heart_num > 30:
+                    break
                 await WebApi.send_gifts(session, uid=self.uid, bag_id=hearts[i]['bag_id'],
                                         gift_id=hearts[i]['gift_id'], gift_num=hearts[i]['gift_num'],
                                         ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
