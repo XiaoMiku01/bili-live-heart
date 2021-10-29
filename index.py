@@ -1,5 +1,6 @@
 import asyncio
 import json
+import sys
 from run import main
 from Daily import Live
 
@@ -24,7 +25,6 @@ def main_handler(event, context):
     except Exception as e:
         print(f"运行出错:{repr(e)}")
     print('complete!')
-    loop.close()
     return True
 
 
@@ -46,8 +46,11 @@ if __name__ == '__main__':
         pass
     except Exception as e:
         print(f"运行出错:{repr(e)}")
-    l = Live(uid, cookie, ruid, sendkey)
-    loop.run_until_complete(l.run())
-    print(l.message)
-    loop.close()
+        sys.exit(1)
+    try:
+        l = Live(uid, cookie, ruid, sendkey)
+        loop.run_until_complete(l.run())
+        print(l.message)
+    except Exception as e:
+        print(f"运行出错:{repr(e)}")
     print('complete!')
