@@ -21,7 +21,7 @@ async def get_info(session, room_id):
         info = await WebApi.get_info(session, room_id)
     except CancelledError:
         raise
-    except Exception :
+    except Exception:
         info = await WebApi.get_info_by_room(session, room_id)
         info = info['room_info']
 
@@ -122,7 +122,10 @@ class SmallHeartTask:
             count = 0
 
             async for m in medals(session):
-                info = await get_info(session, m['roomid'])
+                try:
+                    info = await get_info(session, m['roomid'])
+                except KeyError:
+                    continue
                 room_id = info['room_id']  # ensure not the short id
                 area_id = info['area_id']
                 parent_area_id = info['parent_area_id']
@@ -142,7 +145,8 @@ class SmallHeartTask:
             if len(room_infos) == 0:
                 raise Exception(f'一个勋章都没有~结束任务（用户{num}：{uname}）')
             if (len(room_infos) < 8) and self.CLOUD_SERVICE:
-                raise Exception(f'粉丝牌不足9个，云函数无法执行，请在本地运行~结束任务（用户{num}：{uname}）')
+                raise Exception(
+                    f'粉丝牌不足9个，云函数无法执行，请在本地运行~结束任务（用户{num}：{uname}）')
             self.queue = queue = asyncio.Queue(MAX_HEARTS_PER_DAY)
 
             for i in range(1, MAX_HEARTS_PER_DAY + 1):
