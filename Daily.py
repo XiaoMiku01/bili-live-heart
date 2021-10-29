@@ -45,7 +45,7 @@ class Live:
                                         gift_id=hearts[i]['gift_id'], gift_num=hearts[i]['gift_num'],
                                         ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
                 heart_num += hearts[i]['gift_num']
-                await asyncio.sleep(1)
+                await asyncio.sleep(5)
             self.message += f"{heart_num}个小心心赠送成功\n"
             await asyncio.sleep(10)
             medal = [m for m in (await WebApi.get_fans_medal(session)) if self.room_id == m['room_id']][0]
