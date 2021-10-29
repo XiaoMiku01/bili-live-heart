@@ -28,27 +28,28 @@ class Live:
     async def run(self):
         self.session = session = aiohttp.ClientSession(headers=self.headers)
         try:
-            self.room_id = (await WebApi.get_room_id(session, self.ruid))['roomid']
-            hearts = [g for g in (await WebApi.get_gift(session)) if (g['gift_name'] == "小心心")]
-            if not hearts:
-                raise Exception("背包中未发现小心心")
+            self.room_id = (await WebApi.get_room_id(session, self.ruid))['live_room']['roomid']
+            hearts = [g for g in (await WebApi.get_gift(session, self.room_id)) if (g['gift_name'] == "小心心")]
             try:
                 sign = await WebApi.do_sign(session)
                 self.message += f"直播区签到成功(本月签到天数：{sign['hadSignDays']}/{sign['allDays']})\n"
             except WebApiRequestError:
-                pass
+                self.message += "今日已签到过,无法重复签到\n"
+            heart_num = 0
+            if hearts:
+                for i in range(len(hearts)):
+                    if heart_num > 30:
+                        break
+                    await WebApi.send_gifts(session, uid=self.uid, bag_id=hearts[i]['bag_id'],
+                                            gift_id=hearts[i]['gift_id'], gift_num=hearts[i]['gift_num'],
+                                            ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
+                    heart_num += hearts[i]['gift_num']
+                await asyncio.sleep(5)
+                self.message += f"{heart_num}个小心心赠送成功\n"
+            else:
+                self.message += "背包中未发现小心心\n"
             await WebApi.send_msg(session, self.room_id, self.csrf)
             self.message += "弹幕打卡成功\n"
-            heart_num = 0
-            for i in range(len(hearts)):
-                if heart_num > 30:
-                    break
-                await WebApi.send_gifts(session, uid=self.uid, bag_id=hearts[i]['bag_id'],
-                                        gift_id=hearts[i]['gift_id'], gift_num=hearts[i]['gift_num'],
-                                        ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
-                heart_num += hearts[i]['gift_num']
-                await asyncio.sleep(5)
-            self.message += f"{heart_num}个小心心赠送成功\n"
             await asyncio.sleep(10)
             medal = [m for m in (await WebApi.get_fans_medal(session)) if self.room_id == m['room_id']][0]
             now = datetime.now()
@@ -71,7 +72,7 @@ class Live:
     async def ServerChan(self):
         url = f'https://sctapi.ftqq.com/{self.sendkey}.send'
         data = {
-            'title': '直播间打卡推送',
+            'title': '直播间打卡推送\n',
             'desp': self.message.replace('\n', '\n\n')
         }
         async with aiohttp.ClientSession() as session:
