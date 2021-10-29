@@ -2,7 +2,7 @@
 ## 第一步：  
 下载云函数压缩包(二选一)  
 - [Github](https://github.com/XiaoMiku01/bili-live-heart/releases/tag/zip)
-- [百度云](https://pan.baidu.com/s/1sFzW5FHTtUYi_sxy0ZtVxg)  
+- [百度云](https://pan.baidu.com/s/1sFzW5FHTtUYi_sxy0ZtVxg) 提取码：asou  
 ## 第二步：
 - 登录[腾讯云函数官网](https://cloud.tencent.com/product/scf) 并进入控制台![YZJ1L__V_9J2S_7OK8HM896.png](http://i0.hdslb.com/bfs/album/6ad41c5f8a1d8fee0fab90a03d78f9e70c169d30.png)  
 - 选择函数服务 - 新建![XF~GC_UOPY_9SZM_L_F8D_1.png](http://i0.hdslb.com/bfs/album/52926f702b11afbafa9e25f621f1d5c7d078f0b0.png)  
