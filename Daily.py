@@ -44,7 +44,7 @@ class Live:
                                             gift_id=hearts[i]['gift_id'], gift_num=hearts[i]['gift_num'],
                                             ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
                     heart_num += hearts[i]['gift_num']
-                await asyncio.sleep(5)
+                    await asyncio.sleep(3)
                 self.message += f"{heart_num}个小心心赠送成功\n"
             else:
                 self.message += "背包中未发现小心心\n"
@@ -72,7 +72,7 @@ class Live:
     async def ServerChan(self):
         url = f'https://sctapi.ftqq.com/{self.sendkey}.send'
         data = {
-            'title': '直播间打卡推送\n',
+            'title': '直播间打卡推送',
             'desp': self.message.replace('\n', '\n\n')
         }
         async with aiohttp.ClientSession() as session:
