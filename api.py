@@ -161,16 +161,17 @@ class WebApi:
         return await cls._get(session, url, params={'room_id': room_id})
 
     @classmethod
-    async def get_gift(cls, session: ClientSession, room_id) -> List:
+    async def get_gift(cls, session: ClientSession) -> List:
         url = 'https://api.live.bilibili.com/xlive/web-room/v1/gift/bag_list'
-        return (await cls._get(session, url, params={'t': int(time.time()), 'room_id': room_id}))['list']
+        gift_list = (await cls._get(session, url))['list']
+        return gift_list if gift_list != None else []
 
     @ classmethod
     async def send_msg(cls, session: ClientSession, room_id: int, csrf: str) -> Dict:
-        url='https://api.live.bilibili.com/msg/send'
-        danmu=['(⌒▽⌒)', '（￣▽￣）', '(=・ω・=)', '(｀・ω・´)', '(〜￣△￣)〜', '(･∀･)', '(°∀°)ﾉ', '(￣3￣)', '╮(￣▽￣)╭', '_(:3」∠)_',
+        url = 'https://api.live.bilibili.com/msg/send'
+        danmu = ['(⌒▽⌒)', '（￣▽￣）', '(=・ω・=)', '(｀・ω・´)', '(〜￣△￣)〜', '(･∀･)', '(°∀°)ﾉ', '(￣3￣)', '╮(￣▽￣)╭', '_(:3」∠)_',
                  '(^・ω・^ )', '(●￣(ｴ)￣●)', 'ε=ε=(ノ≧∇≦)ノ', '⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄', '←◡←']
-        data= {
+        data = {
             "bubble": "0",
             "msg": random.choice(danmu),
             "color": "5816798",
@@ -228,6 +229,16 @@ class WebApi:
     async def get_room_id(cls, session: ClientSession, mid):
         url = 'https://api.bilibili.com/x/space/acc/info'
         return await cls._get(session, url, params={'mid': mid})
+
+    @classmethod
+    async def silver2coin(cls, session: ClientSession, csrf):
+        url = 'https://api.live.bilibili.com/xlive/revenue/v1/wallet/silver2coin'
+        data = {
+            "csrf_token": csrf,
+            "csrf": csrf,
+            "visit_id": ""
+        }
+        return await cls._post(session, url, data=urlencode(data))
 
     @classmethod
     async def secret_player(cls, session: ClientSession, csrf):

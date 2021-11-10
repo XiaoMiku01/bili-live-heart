@@ -9,7 +9,8 @@ from Daily import Live
 def main_handler(event, context):
     print("start!")
     data = json.loads(context['environment'])
-    uid, cookie, ruid = data['uid'], data['cookie'], data['ruid']
+    uid, cookie = data['uid'], data['cookie']
+    ruid = data.get('ruid', None)
     sendkey = data.get('sendkey', None)
     loop = asyncio.get_event_loop()
     try:
@@ -19,7 +20,7 @@ def main_handler(event, context):
     except Exception as e:
         print(f"运行出错:{repr(e)}")
         return False
-    time.sleep(30)
+    time.sleep(10)
     l = Live(uid, cookie, ruid, sendkey)
     loop.run_until_complete(l.run())
     print(l.message)
@@ -34,9 +35,9 @@ if __name__ == '__main__':
     u = user_config['users']
     uid = u['uid']
     cookie = u['cookie']
-    ruid = u['ruid']
+    ruid = u.get('ruid', None)
     sendkey = u.get('sendkey', None)
-    assert uid and cookie and ruid, "用户配置不能为空"
+    assert uid and cookie, "用户配置不能为空"
     print("start!")
     loop = asyncio.get_event_loop()
     try:
@@ -46,7 +47,7 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"运行出错:{repr(e)}")
         sys.exit(1)
-    time.sleep(30)
+    time.sleep(10)
     l = Live(uid, cookie, ruid, sendkey)
     loop.run_until_complete(l.run())
     print(l.message)

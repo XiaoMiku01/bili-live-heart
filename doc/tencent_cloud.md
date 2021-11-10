@@ -3,7 +3,7 @@
 ## 第一步：  
 下载云函数压缩包(二选一)  
 - [Github](https://github.com/XiaoMiku01/bili-live-heart/releases/tag/zip)
-- [百度云](https://pan.baidu.com/s/1qdHLNruTGHeP-fiBF7op8g) 提取码：asou  
+- [百度云](https://pan.baidu.com/s/1CJe4Af-VtR3Yvszpawm4-w) 提取码：asou  
 ## 第二步：
 - 登录[腾讯云函数官网](https://cloud.tencent.com/product/scf) 并进入控制台  
 ![YZJ1896.png](http://i0.hdslb.com/bfs/album/6ad41c5f8a1d8fee0fab90a03d78f9e70c169d30.png@300h)  
@@ -15,7 +15,7 @@
 ![_PU1N_1K539U_C~_EE85~PP.png](http://i0.hdslb.com/bfs/album/790491e7d5cabce4dbfcceb8e03d1794d42d0cdd.png@300h)  
 - 点开高级配置 - 环境配置  
 执行超时时间：**900**秒  
-环境变量填写自己B站uid，B站cookie（[获取方式](bili.md)），需要赠送小心心的主播uid（ruid），Server酱的[SendKey](https://sct.ftqq.com)（选填）  
+环境变量填写自己B站uid，B站cookie（[获取方式](bili.md)），需要赠送小心心的主播uid（ruid，如果为0或不填则只进行签到不赠送小心心），Server酱的[SendKey](https://sct.ftqq.com)（选填）  
 （注意：**key栏中的字母全为小写**）  
 ![_DVA669_BPQ_BC~NSULLUDE.png](http://i0.hdslb.com/bfs/album/ff7eb9b5aa48d1564089a7c05c0df0a39368dd6a.png)
 - 其他配置不变 - 展开触发器配置  
