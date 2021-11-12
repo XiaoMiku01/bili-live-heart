@@ -58,6 +58,8 @@ class Live:
             async for m in medals(session):
                 if room_num > 50:
                     break
+                if 'roomid' not in m:
+                    continue
                 print(m['target_name'], '房间{}已打卡'.format(m['roomid']))
                 await WebApi.send_msg(session, m['roomid'], self.csrf)
                 room_num += 1
