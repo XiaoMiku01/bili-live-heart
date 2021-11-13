@@ -60,8 +60,8 @@ class Live:
                     break
                 if 'roomid' not in m:
                     continue
-                print(m['target_name'], '房间{}已打卡'.format(m['roomid']))
                 await WebApi.send_msg(session, m['roomid'], self.csrf)
+                print(m['target_name'], '房间{}已打卡'.format(m['roomid']))
                 room_num += 1
                 await asyncio.sleep(1)
             self.message += f"{room_num}个房间打卡成功\n"

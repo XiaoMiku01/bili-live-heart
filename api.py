@@ -71,14 +71,14 @@ class WebApi:
         async with session.get(*args, **kwds) as res:
             res_json = await res.json()
             cls._check(res_json)
-            return res_json['data']
+            return res_json('data', {})
 
     @classmethod
     async def _post(cls, session: ClientSession, *args, **kwds):
         async with session.post(*args, **kwds) as res:
             res_json = await res.json()
             cls._check(res_json)
-            return res_json['data']
+            return res_json('data', {})
 
     @classmethod
     async def post_enter_room_heartbeat(cls,
