@@ -15,8 +15,6 @@ def main_handler(event, context):
     loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(main(uid, cookie, cloud_service=True))
-    except KeyboardInterrupt:
-        pass
     except Exception as e:
         print(f"运行出错:{repr(e)}")
         return False
@@ -42,8 +40,6 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(main(uid, cookie, cloud_service=False))
-    except KeyboardInterrupt:
-        pass
     except Exception as e:
         print(f"运行出错:{repr(e)}")
         sys.exit(1)
