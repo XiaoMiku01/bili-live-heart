@@ -37,9 +37,6 @@ async def medals(session):
         assert page == page_info['curPage']
 
         for medal in data['fansMedalList']:
-            if 'roomid' in medal and medal['roomid'] < 10000:
-                medal['roomid'] = (await WebApi.get_room_id(session, medal['target_id']))[
-                    'live_room']['roomid']
             yield medal
 
         if page < page_info['totalpages']:
@@ -98,12 +95,6 @@ class SmallHeartTask:
         else:
             print('检测到为本地运行模式')
 
-    async def run(self):
-        await self.do_work()
-
-    def timeout_handler(self):
-        print(f'今天小心心任务未能完成（用户{self.user.num}：{self.user.name}）')
-
     async def do_work(self):
         global session
 
@@ -159,7 +150,7 @@ class SmallHeartTask:
 
             await queue.join()
             print(f'今天小心心任务已完成（用户{num}：{uname}）')
-            raise KeyboardInterrupt
+            return
         except CancelledError:
             raise
         finally:
@@ -175,9 +166,6 @@ class SmallHeartTask:
                 pass
 
             await session.close()
-            self.queue = None
-            self.tasks = None
-            self.session = None
 
     async def dispatch(self, room_infos):
         uname = self.user.name
