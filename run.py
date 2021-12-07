@@ -37,9 +37,6 @@ async def medals(session):
         assert page == page_info['curPage']
 
         for medal in data['fansMedalList']:
-            if 'roomid' in medal and medal['roomid'] < 10000:
-                medal['roomid'] = (await WebApi.get_room_id(session, medal['target_id']))[
-                    'live_room']['roomid']
             yield medal
 
         if page < page_info['totalpages']:
