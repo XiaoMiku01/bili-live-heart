@@ -2,8 +2,8 @@
 注意：此方法需要至少9个粉丝牌才能使用！若想要自动打卡送小心心则必须超过12个牌子  
 ## 第一步：  
 下载云函数压缩包(二选一)  
-- [Github](https://github.com/XiaoMiku01/bili-live-heart/releases/tag/zip)
-- [百度云](https://pan.baidu.com/s/1cEWHDtfLaALCgpyzDK-DmQ) 提取码：asou  
+- [Github](https://github.com/XiaoMiku01/bili-live-heart/releases/tag/0.7.0)
+- [百度云](https://pan.baidu.com/s/1v_RIXjFCRl4FJZcicgCOtg) 提取码：asou  
 ## 第二步：
 - 登录[腾讯云函数官网](https://cloud.tencent.com/product/scf) 并进入控制台  
 ![YZJ1896.png](http://i0.hdslb.com/bfs/album/6ad41c5f8a1d8fee0fab90a03d78f9e70c169d30.png@300h)  
