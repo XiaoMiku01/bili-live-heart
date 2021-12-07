@@ -15,7 +15,7 @@
 ![_PU1N_1K539U_C~_EE85~PP.png](http://i0.hdslb.com/bfs/album/790491e7d5cabce4dbfcceb8e03d1794d42d0cdd.png@300h)  
 - 点开高级配置 - 环境配置  
 执行超时时间：**900**秒  
-环境变量填写自己B站uid，B站cookie（[获取方式](bili.md)），需要赠送小心心的主播uid（ruid，不填则只进行签到不赠送小心心），Server酱的[SendKey](https://sct.ftqq.com)（选填）  
+环境变量填写自己B站uid，B站cookie（[获取方式](bili.md)），需要赠送小心心的主播uid（ruid，不填则只进行签到不赠送小心心）弹幕打卡的不需要填写，会自动打卡，Server酱的[SendKey](https://sct.ftqq.com)（选填）  
 （注意：**key栏中的字母全为小写**）  
 ![_DVA669_BPQ_BC~NSULLUDE.png](http://i0.hdslb.com/bfs/album/ff7eb9b5aa48d1564089a7c05c0df0a39368dd6a.png)
 - 其他配置不变 - 展开触发器配置  
