@@ -39,8 +39,8 @@ class Live:
                 self.message += f"✔ 直播区签到成功(本月签到天数：{sign['hadSignDays']}/{sign['allDays']})\n"
                 self.successful += 1  # 若执行成功则successful变量+1，下同
             except WebApiRequestError:
-                self.err_message += "✘ 今日已签到过,无法重复签到\n"
-                self.error += 1  # 若执行出错则error变量+1，下同
+                self.message += "✔ 今日已签到过,无法重复签到\n"
+                self.successful += 1  # 若执行出错则error变量+1，下同
             await asyncio.sleep(3)
 
             # 直播间打卡
@@ -70,7 +70,20 @@ class Live:
             self.err_message += f"自动打卡出错：{repr(e)}"
             self.error += 1
 
-        # 自动送礼物（逻辑顺序修改见自述文件）
+        # 我超，一个魂！
+        '''
+        try:
+            await WebApi.secret_player(session, self.csrf)
+            pass
+        except Exception:
+            pass
+        '''
+
+        await session.close()
+
+    # 自动送礼物（逻辑顺序修改见自述文件）
+    async def gift(self):
+        self.session = session = aiohttp.ClientSession(headers=self.headers)
         if self.ruid:
             if self.room_id:
                 medal = [m for m in (await WebApi.get_fans_medal(session)) if self.room_id == m['room_id']][0]
@@ -130,16 +143,8 @@ class Live:
             self.error += 1
             self.check_result -= 1
 
-        # 我超，一个魂！
-        '''
-        try:
-            await WebApi.secret_player(session, self.csrf)
-            pass
-        except Exception:
-            pass
-        '''
-
         await session.close()
+
         if self.err_message:
             self.message += f"\n出错日志：\n{self.err_message}"
         if self.sendkey:

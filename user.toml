@@ -1,10 +1,10 @@
 [users]
 # 自己B站uid
-uid = 123
+uid =
 # B站cookie(不要忘记双引号)
 cookie = ""
 # 需要自动打卡主播uid(如果为0则只进行签到不赠送小心心)
-ruid = 0
+ruid =
 
 # Server酱sendkey（微信推送，选填）
 sendkey = ""
