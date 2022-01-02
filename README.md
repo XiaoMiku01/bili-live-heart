@@ -36,7 +36,7 @@
 免费、稳定、无需服务器、零基础部署  
 缺点：  
 ~~由于腾讯云函数限制了最长15分钟运行时间，所以至少需要9个粉丝牌才能拿满24个小心心。同时如果要想运行后续签到，则必须要至少12个牌子，否则云函数会超时报错，但是任然会得到24个小心心~~  
->更新解决方案：创建函数时，把高级选项里的【异步执行】打开，然后回到上面【超时时间】填到最大，能突破15分钟；不过如果要是没有9个粉丝牌，就把index.py 第17行的 cloud_service=True 改成 cloud_service=False
+>更新解决方案：创建函数时，把高级选项里的【异步执行】打开，然后回到上面【超时时间】填到最大，能突破15分钟；不过如果要是没有9个粉丝牌，就把index.py 第17行的 cloud_service=True 改成 cloud_service=False ([issue#17](https://github.com/XiaoMiku01/bili-live-heart/issues/17#issuecomment-1000831925))  
 
 > ### 本地运行版  
 > > 优点：  
@@ -73,6 +73,7 @@
 
 ## 写在最后
 在部署或使用过程中遇到什么问题，请首先**仔细**阅读文档，若发现自己实在无法解决的问题，可以提交Issues或者B站私信[@晓轩iMIKU](https://space.bilibili.com/32957695) 提问，提问时请带上详细的日志或者运行结果截图，以便快速解决问题！  
+<sub>若对0.7.1-0.7.3版本有疑问，可联系[@一只大胡哩](https://space.bilibili.com/266441262)</sub>  
 最后欢迎大家B站关注：  
 [@嘉然今天吃什么](https://space.bilibili.com/672328094/) [@向晚大魔王](https://space.bilibili.com/672346917/) [@乃琳Queen](https://space.bilibili.com/672342685/) [@贝拉kira](https://space.bilibili.com/672353429/) [@珈乐Carol](https://space.bilibili.com/351609538/)  
 <sub>ps:本项目夹带作者私货：每次执行时会随机关注一位A-SOUL成员（如果你没关注的话），若想取消此功能请注释掉代码中的某一行（嘿嘿~）</sub>
