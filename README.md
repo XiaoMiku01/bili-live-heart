@@ -53,7 +53,7 @@
 - 有时候运行一次无法获取满24个小心心，**请设置多个时间不同的触发器！！！两个触发器间隔建议大于俩小时**  
 - 为了维持脚本正常运行,弹幕打卡限制了100个粉丝牌打卡,望周知！
 ## 写在最后
-在部署或使用过程中遇到什么问题，请首先**仔细**阅读文档，若发现自己实在无法解决的问题，可以提交Issues或者B站私信[@晓轩iMIKU](https://space.bilibili.com/32957695)提问，提问时请带上详细的日志或者运行结果截图，以便快速解决问题！  
+在部署或使用过程中遇到什么问题，请首先**仔细**阅读文档，若发现自己实在无法解决的问题，可以提交Issues或者B站私信 ~~@晓轩iMIKU~~ (号被封了) [@晓小轩iAS](https://space.bilibili.com/32957695)(小号)提问，提问时请带上详细的日志或者运行结果截图，以便快速解决问题！  
 最后欢迎大家B站关注：  
-[@嘉然今天吃什么](https://space.bilibili.com/672328094/) [@向晚大魔王](https://space.bilibili.com/672346917/) [@乃琳Queen](https://space.bilibili.com/672342685/) [@贝拉kira](https://space.bilibili.com/672353429/) [@珈乐Carol](https://space.bilibili.com/351609538/)  
+[@嘉然今天吃什么](https://space.bilibili.com/672328094/) [@向晚大魔王](https://space.bilibili.com/672346917/) [@乃琳Queen](https://space.bilibili.com/672342685/) [@贝拉kira](https://space.bilibili.com/1772442517/) [@珈乐Carol](https://space.bilibili.com/351609538/)  
 <sub>ps:本项目夹带作者私货：每次执行时会随机关注一位A-SOUL成员（如果你没关注的话），若想取消此功能请注释掉代码中的某一行（嘿嘿~）</sub>
