@@ -34,6 +34,7 @@ class Live:
         try:
             # 直播区签到
             self.room_id = (await WebApi.get_room_id(session, self.ruid))['live_room']['roomid'] if self.ruid else None
+            print("\n开始直播区签到...")
             try:
                 sign = await WebApi.do_sign(session)
                 self.message += f"✔ 直播区签到成功(本月签到天数：{sign['hadSignDays']}/{sign['allDays']})\n"
@@ -41,10 +42,12 @@ class Live:
             except WebApiRequestError:
                 self.message += "✔ 今日已签到过,无法重复签到\n"
                 self.successful += 1  # 若执行出错则error变量+1，下同
+            print("Finish.\n")
             await asyncio.sleep(3)
 
             # 直播间打卡
             room_num = 0
+            print("开始直播间打卡...\n")
             async for m in medals(session):
                 if room_num > 99:
                     self.err_message += "✘ 打卡超过100个直播间，结束打卡\n"
@@ -65,6 +68,7 @@ class Live:
                 await asyncio.sleep(1)
             self.message += f"✔ {room_num}个房间打卡成功\n"
             self.successful += 1
+            print("Finish.\n")
             await asyncio.sleep(3)
         except Exception as e:
             self.err_message += f"自动打卡出错：{repr(e)}"
@@ -83,6 +87,7 @@ class Live:
 
     # 自动送礼物（逻辑顺序修改见自述文件）
     async def gift(self):
+        print("开始礼物任务...\n")
         self.session = session = aiohttp.ClientSession(headers=self.headers)
         if self.ruid:
             if self.room_id:
@@ -115,6 +120,11 @@ class Live:
                                             f"当前等级上限：{medal['intimacy']}/{medal['next_intimacy']}\n" \
                                             f"预计还需要{(medal['next_intimacy'] - medal['intimacy']) // medal['today_feed'] + 1}天（{now.strftime('%m.%d')}）到达{medal['level'] + 1}级\n"
                             self.successful += 1
+                            if self.err_message:
+                                self.message += f"\n出错日志：\n{self.err_message}"
+                            if self.sendkey:
+                                await self.ServerChan()
+                                print("Server酱已推送")
                         else:
                             if self.check_result == 0:
                                 print("小心心获取未达上限，尝试获取一次\n")
@@ -122,6 +132,11 @@ class Live:
                             else:
                                 self.err_message += "✘ 小心心获取未达上限，且尝试获取失败，请手动检查日志或再次运行\n"
                                 self.error += 1
+                                if self.err_message:
+                                    self.message += f"\n出错日志：\n{self.err_message}"
+                                if self.sendkey:
+                                    await self.ServerChan()
+                                    print("Server酱已推送")
                     else:
                         if self.check_result == 0:
                             print("背包中未发现小心心、辣条，尝试获取一次\n")
@@ -129,6 +144,11 @@ class Live:
                         else:
                             self.err_message += "✘ 背包中未发现小心心、辣条，且尝试获取失败，请手动检查日志或再次运行\n"
                             self.error += 1
+                            if self.err_message:
+                                self.message += f"\n出错日志：\n{self.err_message}"
+                            if self.sendkey:
+                                await self.ServerChan()
+                                print("Server酱已推送")
                 else:
                     print("今日小心心获取已达上限，跳过获取脚本")
                     self.message += f"✔ 今日小心心获取已达上限，跳过获取脚本\n" \
@@ -137,19 +157,23 @@ class Live:
                                     f"当前等级上限：{medal['intimacy']}/{medal['next_intimacy']}\n" \
                                     f"预计还需要{(medal['next_intimacy'] - medal['intimacy']) // medal['today_feed'] + 1}天（{now.strftime('%m.%d')}）到达{medal['level'] + 1}级\n"
                     self.successful += 1
+                    if self.err_message:
+                        self.message += f"\n出错日志：\n{self.err_message}"
+                    if self.sendkey:
+                        await self.ServerChan()
+                        print("Server酱已推送")
         else:
             print("未设置赠送对象\n跳过赠送，即将开始获取小心心...")
             self.err_message += "✘ 未设置赠送对象，小心心获取情况请自行查看\n"
             self.error += 1
             self.check_result -= 1
+            if self.err_message:
+                self.message += f"\n出错日志：\n{self.err_message}"
+            if self.sendkey:
+                await self.ServerChan()
+                print("Server酱已推送")
 
         await session.close()
-
-        if self.err_message:
-            self.message += f"\n出错日志：\n{self.err_message}"
-        if self.sendkey:
-            await self.ServerChan()
-            print("Server酱已推送")
 
     async def ServerChan(self):
         url = f'https://sctapi.ftqq.com/{self.sendkey}.send'

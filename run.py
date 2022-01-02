@@ -91,9 +91,9 @@ class SmallHeartTask:
         self.HEART_INTERVAL = 300
         self.CLOUD_SERVICE = cloud_service
         if self.CLOUD_SERVICE:
-            print('检测到为云函数模式')
+            print('检测到为云函数模式\n')
         else:
-            print('检测到为本地运行模式')
+            print('检测到为本地运行模式\n')
 
     async def do_work(self):
         global session
@@ -110,7 +110,7 @@ class SmallHeartTask:
         }
         self.session = session = aiohttp.ClientSession(headers=headers)
         try:
-            print(f'开始今天的小心心任务（用户{num}：{uname}）')
+            print(f'开始今天的小心心任务（用户{num}：{uname}）\n')
 
             room_infos = []
             count = 0

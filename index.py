@@ -7,7 +7,7 @@ from Daily import Live
 
 
 def main_handler(event, context):  # 运行逻辑顺序有修改，详见README.md，下同
-    print("start!")
+    print("Start!")
     data = json.loads(context['environment'])
     uid, cookie = data['uid'], data['cookie']
     ruid = data.get('ruid', None)
@@ -21,6 +21,7 @@ def main_handler(event, context):  # 运行逻辑顺序有修改，详见README.
         try:
             time.sleep(10)
             loop.run_until_complete(main(uid, cookie, cloud_service=True))
+            loop.run_until_complete(l.gift())
         except Exception as e:
             print(f"运行出错:{repr(e)}")
             return False
@@ -48,7 +49,8 @@ if __name__ == '__main__':
     if l.check_result == -1:
         try:
             time.sleep(10)
-            loop.run_until_complete(main(uid, cookie, cloud_service=True))
+            loop.run_until_complete(main(uid, cookie, cloud_service=False))
+            loop.run_until_complete(l.gift())
         except Exception as e:
             print(f"运行出错:{repr(e)}")
     print(l.message)
