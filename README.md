@@ -78,4 +78,3 @@
 最后欢迎大家B站关注：  
 [@嘉然今天吃什么](https://space.bilibili.com/672328094/) [@向晚大魔王](https://space.bilibili.com/672346917/) [@乃琳Queen](https://space.bilibili.com/672342685/) [@贝拉kira](https://space.bilibili.com/672353429/) [@珈乐Carol](https://space.bilibili.com/351609538/)  
 <sub>ps:本项目夹带作者私货：每次执行时会随机关注一位A-SOUL成员（如果你没关注的话），若想取消此功能请注释掉代码中的某一行（嘿嘿~）</sub>  
-<sub><sub>pps:已经被我注释掉了捏（诶嘿</sub></sub>  
