@@ -33,13 +33,13 @@ async def medals(session):
 
     while True:
         data = await WebApi.get_medal(session, page=page)
-        page_info = data['pageinfo']
-        assert page == page_info['curPage']
+        page_info = data['page_info']
+        assert page == page_info['cur_page']
 
-        for medal in data['fansMedalList']:
+        for medal in data['items']:
             yield medal
 
-        if page < page_info['totalpages']:
+        if page < page_info['total_page']:
             page += 1
         else:
             break
