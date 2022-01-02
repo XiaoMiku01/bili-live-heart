@@ -5,6 +5,7 @@
  </div>
 
 1-1 B站接口问题，暂时失效，期末考试中 等我考完试修  
+临时解决方法 https://github.com/XiaoMiku01/bili-live-heart/issues/21#issuecomment-1003606161
 
 基于Python3异步开发的自动获取每日小心心及直播间自动打卡脚本  
 运行环境：不低于Python3.6  
