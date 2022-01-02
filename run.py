@@ -33,13 +33,15 @@ async def medals(session):
 
     while True:
         data = await WebApi.get_medal(session, page=page)
-        page_info = data['pageinfo']
-        assert page == page_info['curPage']
+        page_info = data['page_info']
+        assert page == page_info['cur_page']
 
-        for medal in data['fansMedalList']:
+        for medal in data['items']:
+            if medal['roomid'] == 0:
+                continue
             yield medal
 
-        if page < page_info['totalpages']:
+        if page < page_info['total_page']:
             page += 1
         else:
             break
@@ -138,9 +140,9 @@ class SmallHeartTask:
 
             if len(room_infos) == 0:
                 raise Exception(f'一个勋章都没有~结束任务（用户{num}：{uname}）')
-            if (len(room_infos) < 8) and self.CLOUD_SERVICE:
-                raise Exception(
-                    f'粉丝牌不足9个，云函数无法执行，请在本地运行~结束任务（用户{num}：{uname}）')
+            # if (len(room_infos) < 8) and self.CLOUD_SERVICE:
+            #     raise Exception(
+            #         f'粉丝牌不足9个，云函数无法执行，请在本地运行~结束任务（用户{num}：{uname}）')
             self.queue = queue = asyncio.Queue(MAX_HEARTS_PER_DAY)
 
             for i in range(1, MAX_HEARTS_PER_DAY + 1):

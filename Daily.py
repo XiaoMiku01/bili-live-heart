@@ -40,20 +40,23 @@ class Live:
             if gifts and self.ruid and self.room_id:
                 heart_num = 0
                 spicy_strips = 0
-                for g in gifts:
-                    if g['gift_name'] == '小心心' and heart_num < 30:
-                        gift_num = g['gift_num'] if g['gift_num'] < 30 else 30
-                        await WebApi.send_gifts(session, uid=self.uid, bag_id=g['bag_id'],
-                                                gift_id=g['gift_id'], gift_num=gift_num,
-                                                ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
-                        heart_num += gift_num
-                    elif g['gift_name'] == '辣条':
-                        await WebApi.send_gifts(session, uid=self.uid, bag_id=g['bag_id'],
-                                                gift_id=g['gift_id'], gift_num=g['gift_num'],
-                                                ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
-                        spicy_strips += g['gift_num']
-                    await asyncio.sleep(1)
-                self.message += f"赠送了{heart_num}个小心心，{spicy_strips}个辣条\n"
+                try:
+                    for g in gifts:
+                        if g['gift_name'] == '小心心' and heart_num < 30:
+                            gift_num = g['gift_num'] if g['gift_num'] < 30 else 30
+                            await WebApi.send_gifts(session, uid=self.uid, bag_id=g['bag_id'],
+                                                    gift_id=g['gift_id'], gift_num=gift_num,
+                                                    ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
+                            heart_num += gift_num
+                        elif g['gift_name'] == '辣条':
+                            await WebApi.send_gifts(session, uid=self.uid, bag_id=g['bag_id'],
+                                                    gift_id=g['gift_id'], gift_num=g['gift_num'],
+                                                    ruid=self.ruid, room_id=self.room_id, csrf=self.csrf)
+                            spicy_strips += g['gift_num']
+                        await asyncio.sleep(1)
+                    self.message += f"赠送了{heart_num}个小心心，{spicy_strips}个辣条\n"
+                except WebApiRequestError as e:
+                    self.err_message += f"赠送礼物失败：{e.message}\n"
             else:
                 self.err_message += "背包中未发现小心心、辣条\n" if self.ruid else "未设置赠送对象\n"
             room_num = 0
