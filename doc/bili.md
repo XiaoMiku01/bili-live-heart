@@ -11,7 +11,6 @@
 略  
 ## 第二步：  
 - 在**无痕窗口**进入任意一个直播间  
-推荐进入一个未开播没有也轮播的直播间 eg:[直播间](https://live.bilibili.com/22632157)  
 - 在直播间页面点击右上角登录自己的B站账号  
 ## 第三步：  
 - 点击键盘`F12`或者`鼠标右键`->检查，进入开发者工具  
@@ -21,3 +20,4 @@
 - 在数据包中找到**heartBeat**或**webHeartBeat**，点击找到请求头中的**cookie**项，并复制保留（图中浅蓝色部分）后面部署会用到这个cookie  
 ![cookie](http://i0.hdslb.com/bfs/album/01c052ec17757a34f6a256f03523efa89c3e4d56.jpg)  
 PS:有了cookie能操作B站账号的大部分功能，切勿泄露或分享出去
+## 如果后续打卡出现KeyError('LIVE_BUVID',)报错,请关闭无痕模式抓cookie
