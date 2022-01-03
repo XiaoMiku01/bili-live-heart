@@ -109,6 +109,7 @@ class Live:
                                                         csrf=self.csrf)
                                 spicy_strips += g['gift_num']
                                 await asyncio.sleep(1)
+                        await asyncio.sleep(10)
                         if medal['today_feed'] >= 1300:
                             self.message += f"✔ 赠送了{heart_num}个小心心，{spicy_strips}个辣条\n" \
                                             f"目前：{medal['medal_name']}{medal['level']}级\n" \
@@ -167,7 +168,7 @@ class Live:
     async def ServerChan(self):
         url = f'https://sctapi.ftqq.com/{self.sendkey}.send'
         data = {
-            'title': '直播间打卡推送',
+            'title': f'Bili Live Heart ✔{self.total[0]} ✘{self.total[1]}',  # 使Server酱免费用户在标题即可知晓执行情况而非进入详情页面'
             'desp': self.message.replace('\n', '\n\n')
         }
         async with aiohttp.ClientSession() as session:
