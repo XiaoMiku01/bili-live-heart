@@ -141,11 +141,11 @@ class WebApi:
 
     @classmethod
     async def get_medal(cls, session: ClientSession, page=1, page_size=10) -> Dict:
-        url = 'https://api.live.bilibili.com/i/api/medal'
+        url = 'https://api.live.bilibili.com/xlive/app-ucenter/v1/user/GetMyMedals'
 
         params = {
             'page': page,
-            'pageSize': page_size,
+            'page_size': page_size,
         }
 
         return await cls._get(session, url, params=params)
