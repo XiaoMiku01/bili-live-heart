@@ -1,7 +1,5 @@
 import asyncio
 import json
-import time
-from bili.api import WebApiRequestError
 from bili.login import BiliUser
 from bili.smallheart import SmallHeartTask
 from bili.dailyclockin import DailyClockIn

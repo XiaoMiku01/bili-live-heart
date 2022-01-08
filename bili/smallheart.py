@@ -117,7 +117,7 @@ class SmallHeartTask:
             message = "未设置赠送目标UID"
             logger.info(message)
             self.user.message.append(message)
-            
+
     async def do_work(self, HEART_NUM=None):
         logger.info(f"开始小心心任务")
         self.session = session = self.user.session
@@ -136,7 +136,7 @@ class SmallHeartTask:
                         info = await get_info(session, m["roomid"])
                     except KeyError:
                         continue
-                    room_id = info["room_id"] 
+                    room_id = info["room_id"]
                     area_id = info["area_id"]
                     parent_area_id = info["parent_area_id"]
                     owner = m["uname"]
@@ -173,9 +173,10 @@ class SmallHeartTask:
                 pass
         logger.info(f"小心心任务已完成")
         await asyncio.sleep(10)
-        if remaining := (self.MAX_HEARTS_PER_DAY - (
+        remaining = self.MAX_HEARTS_PER_DAY - (
             await self.get_hearts_7_days(session) + await self.hearts_num_send(session)
-        )) > 0:
+        )
+        if remaining > 0:
             await self.do_work(remaining)
         await self.send_gifts(session)
 

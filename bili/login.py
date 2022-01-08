@@ -88,7 +88,8 @@ class BiliUser:
         await self.check_version()
         url = "https://api.bilibili.com/nav"
         res = await self.session.post(url)
-        if res.status == 200 and (login_data := await res.json())["code"] == 0:
+        login_data = await res.json()
+        if res.status == 200 and login_data["code"] == 0:
             self.uname = login_data["data"]["uname"]
             logger.info(
                 "用户: {} (UID:{})登录成功".format(
