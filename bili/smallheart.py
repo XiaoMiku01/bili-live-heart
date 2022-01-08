@@ -1,12 +1,16 @@
 import logging
 import asyncio
 import time
-import datetime
+import calendar
 from collections import namedtuple
 from asyncio import CancelledError
 
 from .api import WebApi, medals, get_info, WebApiRequestError
 from .login import BiliUser
+
+if not hasattr(asyncio, "create_task"):
+    asyncio.create_task = asyncio.ensure_future
+
 
 RoomInfo = namedtuple("RoomInfo", "room_id, parent_area_id, area_id, owner, ruid")
 logging.basicConfig(
@@ -31,7 +35,15 @@ class SmallHeartTask:
                 ruid = i["ruid"]
             if (
                 i["gift_name"] == "小心心"
-                and int(time.mktime(datetime.date.today().timetuple()))
+                and int(
+                    calendar.timegm(
+                        time.strptime(
+                            time.strftime("%Y-%m-%d", time.gmtime(int(time.time()))),
+                            "%Y-%m-%d",
+                        )
+                    )
+                )
+                + 57600
                 < i["timestamp"]
                 < time.time()
                 and i["ruid"] == ruid

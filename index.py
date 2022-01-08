@@ -20,7 +20,7 @@ async def run(user: BiliUser):
 def main_handler(event, context):
     data = json.loads(context["environment"])
     cookie = data["cookie"]
-    ruid = data.get("ruid", None)
+    ruid = int(data.get("ruid", 0))
     sendkey = data.get("sendkey", None)
     loop = asyncio.get_event_loop()
     message = ""
