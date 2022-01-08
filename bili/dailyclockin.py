@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from datetime import datetime, timedelta
 from .login import BiliUser
 from .api import WebApi, WebApiRequestError
 
@@ -30,4 +31,15 @@ class DailyClockIn:
         self.user.message.append(
             f"弹幕打卡成功: {len(self.user.room_info) - err_num}/{len(self.user.room_info)}"
         )
-        await WebApi.secret_player(self.user.session, self.user.csrf)  # secret player
+        if self.user.ruid:
+            await WebApi.wear_medal(
+                self.user.session, self.user.medal_id, self.user.csrf
+            )  # wear medal
+            medal = await WebApi.get_weared_medal(self.user.session, self.user.csrf)
+            now = datetime.now()
+            now += timedelta(
+                days=(medal["next_intimacy"] - medal["intimacy"]) // medal["today_feed"]
+                + 1
+            )
+            message = f"目前：{medal['medal_name']}{medal['level']}级\n今日亲密度：{medal['today_feed']}/{medal['day_limit']}\n当前等级上限：{medal['intimacy']}/{medal['next_intimacy']}\n预计还需要{(medal['next_intimacy'] - medal['intimacy']) // medal['today_feed'] + 1}天（{now.strftime('%m.%d')}）到达{medal['level'] + 1}级 "
+            self.user.message.append(message)

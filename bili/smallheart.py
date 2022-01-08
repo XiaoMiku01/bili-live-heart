@@ -113,7 +113,11 @@ class SmallHeartTask:
                 logger.error(message_err)
                 self.user.message_err.append(message_err)
                 return
-
+        else:
+            message = "未设置赠送目标UID"
+            logger.info(message)
+            self.user.message.append(message)
+            
     async def do_work(self, HEART_NUM=None):
         logger.info(f"开始小心心任务")
         self.session = session = self.user.session
@@ -124,30 +128,33 @@ class SmallHeartTask:
         if HEART_NUM:
             MAX_HEARTS_PER_DAY = HEART_NUM
         try:
-            room_infos = []
-            count = 0
+            if self.user.room_info == []:
+                room_infos = []
+                count = 0
+                async for m in medals(session):
+                    try:
+                        info = await get_info(session, m["roomid"])
+                    except KeyError:
+                        continue
+                    room_id = info["room_id"] 
+                    area_id = info["area_id"]
+                    parent_area_id = info["parent_area_id"]
+                    owner = m["uname"]
+                    ruid = m["target_id"]
+                    room_info = RoomInfo(room_id, parent_area_id, area_id, owner, ruid)
 
-            async for m in medals(session):
-                try:
-                    info = await get_info(session, m["roomid"])
-                except KeyError:
-                    continue
-                room_id = info["room_id"] 
-                area_id = info["area_id"]
-                parent_area_id = info["parent_area_id"]
-                owner = m["uname"]
-                ruid = m["target_id"]
-                room_info = RoomInfo(room_id, parent_area_id, area_id, owner, ruid)
-
-                if parent_area_id == 0 or area_id == 0:
-                    logger.error(f"Invalid room info: {room_info}")
-                    continue
-
-                room_infos.append(room_info)
-                count += 1
-                if count == MAX_HEARTS_PER_DAY:
-                    break
-            self.user.room_info = room_infos
+                    if parent_area_id == 0 or area_id == 0:
+                        logger.error(f"Invalid room info: {room_info}")
+                        continue
+                    if m["target_id"] == self.user.ruid:
+                        self.user.medal_id = m["medal_id"]
+                    room_infos.append(room_info)
+                    count += 1
+                    if count == MAX_HEARTS_PER_DAY:
+                        break
+                self.user.room_info = room_infos
+            else:
+                room_infos = self.user.room_info
             if len(room_infos) == 0:
                 raise Exception(f"一个粉丝牌都没有~结束任务")
             self.queue = queue = asyncio.Queue(MAX_HEARTS_PER_DAY)
@@ -171,7 +178,6 @@ class SmallHeartTask:
         )) > 0:
             await self.do_work(remaining)
         await self.send_gifts(session)
-        pass
 
     async def dispatch(self, room_infos):
         self.tasks = tasks = []

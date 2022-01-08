@@ -1,10 +1,14 @@
-[users]
-# 自己B站uid
-uid = 123
+[[users]] # 账号1
 # B站cookie(不要忘记双引号)
 cookie = ""
-# 需要自动打卡主播uid(如果为0则只进行签到不赠送小心心 只能填一个)
+# 需要自动打卡主播uid(不是房间号！是UID! 如果为0则只进行签到不赠送小心心 只能填一个)
 ruid = 0
 
-# Server酱sendkey（微信推送，选填）
+[[users]] # 账号2
+cookie =""
+ruid = 0
+
+# 多账号请以相同格式添加
+
+[serverchan] # Server酱sendkey(微信推送，选填)
 sendkey = ""

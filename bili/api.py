@@ -245,6 +245,25 @@ class WebApi:
         }
         return await cls._post(session, url, data=urlencode(data), headers=headers)
 
+    @classmethod
+    async def wear_medal(cls, session: ClientSession, medal_id, csrf):
+        url = "https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/wear"
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        data = {
+            "medal_id": medal_id,
+            "csrf": csrf,
+        }
+        return await cls._post(session, url, data=urlencode(data), headers=headers)
+
+    @classmethod
+    async def get_weared_medal(cls, session: ClientSession, csrf):
+        url = "https://api.live.bilibili.com/live_user/v1/UserInfo/get_weared_medal"
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        data = {
+            "csrf": csrf,
+        }
+        return await cls._post(session, url, data=urlencode(data), headers=headers)
+
 
 async def calc_sign(data, secret_rule):
     parent_id, area_id, seq_id, room_id = json.loads(data["id"])

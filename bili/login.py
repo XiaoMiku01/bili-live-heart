@@ -1,8 +1,11 @@
 import re
 import uuid
+import json
 import logging
 import aiohttp
 from .api import WebApi, WebApiRequestError
+
+__VERSION__ = "1.0.0"
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -24,6 +27,7 @@ class BiliUser:
         self.buvid = None  # buvid
         self.uname = None  # uname
         self.uuid = uuid.uuid4().hex  # uuid
+        self.medal_id = None  # 用户勋章ID
         """
         :param cookie: B站cookie
         :param ruid: 赠送小心心的目标uid
@@ -31,7 +35,6 @@ class BiliUser:
         """
         self.cookie = self.check_cookie(cookie)
         self.ruid = ruid
-        self.sendkey = sendkey
 
         self.headers = {
             "Referer": "https://live.bilibili.com",
@@ -55,14 +58,34 @@ class BiliUser:
             self.csrf = re.search(r"bili_jct=([^;]+);", cookie).group(1)
             return cookie
         else:
-            logger.error("cookie无效,请`关闭`浏览器`无痕模式`重新抓取cookie后重试")
-            raise
+            message_err = "cookie无效,请`关闭`浏览器`无痕模式`重新抓取cookie后重试"
+            logger.error(message_err)
+            raise WebApiRequestError(message_err)
+
+    async def check_version(self):
+        """
+        检查版本
+        :return:
+        """
+        url = "https://gitee.com/XiaoMiku01/bili-live-heart/raw/master/version.json"
+        res = await self.session.get(url)
+        if res.status == 200:
+            version_data = json.loads(await res.text())
+            if __VERSION__ == version_data["version"]:
+                logger.info("检测到当前版本为最新版本(v{})".format(__VERSION__))
+            else:
+                message = f"当前版本为: v{__VERSION__}, 最新版本为: v{version_data['version']}, 请尽量更新后使用"
+                logger.warning(message)
+                self.message.append(message)
+        else:
+            logger.error("检测版本失败")
 
     async def login(self):
         """
         登录,直播区签到
         :return:
         """
+        await self.check_version()
         url = "https://api.bilibili.com/nav"
         res = await self.session.post(url)
         if res.status == 200 and (login_data := await res.json())["code"] == 0:
@@ -82,5 +105,6 @@ class BiliUser:
                 logger.error(message_err)
                 self.message_err.append(message_err)
         else:
-            logger.error("登录失败,请`关闭`浏览器`无痕模式`重新抓取cookie后重试")
-            raise
+            message_err = "登录失败,请`关闭`浏览器`无痕模式`重新抓取cookie后重试"
+            logger.error(message_err)
+            raise WebApiRequestError(message_err)
