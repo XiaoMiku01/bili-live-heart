@@ -1,9 +1,13 @@
 import asyncio
 import json
+import datetime
 from bili.login import BiliUser
 from bili.smallheart import SmallHeartTask
 from bili.dailyclockin import DailyClockIn
 from push import serverchan
+
+from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.triggers.cron import CronTrigger
 
 
 async def run(user: BiliUser):
@@ -25,7 +29,7 @@ def main_handler(event, context):
     loop = asyncio.get_event_loop()
     message = ""
     try:
-        user = BiliUser(cookie=cookie, ruid=ruid)
+        user = BiliUser(cookie=cookie, ruid=ruid, cloud_service=True)
         message = loop.run_until_complete(run(user))
     except Exception as e:
         message = str(e)
@@ -35,11 +39,12 @@ def main_handler(event, context):
     return True
 
 
-if __name__ == "__main__":
+def main():
     import toml
 
     config = toml.load("user.toml")
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     sendkey = config["serverchan"]["sendkey"]
     message = ""
     for u in config["users"]:
@@ -53,3 +58,15 @@ if __name__ == "__main__":
     print(message)
     if sendkey:
         loop.run_until_complete(serverchan.push_message(sendkey, message))
+
+
+if __name__ == "__main__":
+    cron = "0 0 */1 * *"
+    schedulers = BlockingScheduler()
+    schedulers.add_job(
+        main,
+        CronTrigger.from_crontab(cron),
+        id="main",
+        next_run_time=datetime.datetime.now(),
+    )
+    schedulers.start()
