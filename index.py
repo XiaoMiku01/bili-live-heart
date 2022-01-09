@@ -40,9 +40,6 @@ def main_handler(event, context):
 
 
 def main():
-    import toml
-
-    config = toml.load("user.toml")
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     sendkey = config["serverchan"]["sendkey"]
@@ -61,12 +58,13 @@ def main():
 
 
 if __name__ == "__main__":
-    cron = "0 0 */1 * *"
+    import toml
+    config = toml.load("user.toml")
+    cron = config["cron"]["cron"] if config["cron"]["cron"] else "0 0 * * *"
     schedulers = BlockingScheduler()
     schedulers.add_job(
         main,
         CronTrigger.from_crontab(cron),
-        id="main",
         next_run_time=datetime.datetime.now(),
     )
     schedulers.start()

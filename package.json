@@ -10,6 +10,7 @@
     "docs:build": "vuepress build docs"
   },
   "devDependencies": {
+    "@vuepress/plugin-nprogress": "^1.9.5",
     "vuepress": "^1.9.5"
   }
 }

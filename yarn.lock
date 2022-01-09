@@ -1345,7 +1345,7 @@
     "@vuepress/types" "1.9.5"
     cross-spawn "^6.0.5"
 
-"@vuepress/plugin-nprogress@1.9.5":
+"@vuepress/plugin-nprogress@1.9.5", "@vuepress/plugin-nprogress@^1.9.5":
   version "1.9.5"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-nprogress/-/plugin-nprogress-1.9.5.tgz#baaf23193410974089ea56d14dd9a32474705a15"
   integrity sha512-XEtyCt/R/qNcQM62/F6srqOZ6V6mmxSqfQktPMYfOdQqeRW0aCXvG6N2/cy55S4xH8LeEVL4Nxg5m9Cew9AEgA==
