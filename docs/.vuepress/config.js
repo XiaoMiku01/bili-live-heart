@@ -11,10 +11,13 @@ module.exports = {
         nav: [
             { text: 'Home', link: '/' },
             { text: '指南', link: '/guide/' },
+            { text: '常见问题', link: '/qa/' },
         ],
         // search: false,
         sidebar: 'auto',
-        editLinkText: '编辑此页',
+        editLinkText: '在 GitHub 上编辑此页',
+        lastUpdatedText: '上次更新',
+        contributorsText: '贡献者',
         editLinks: true,
     }
 }

@@ -1,6 +1,8 @@
 import logging
 import asyncio
 import time
+import datetime
+import pytz
 import calendar
 from collections import namedtuple
 from asyncio import CancelledError
@@ -19,6 +21,17 @@ logging.basicConfig(
 logger = logging.getLogger("smallheart")
 
 
+def get_beijing_0():
+    local_format = "%Y-%m-%d %H:%M:%S"
+    beijing_tz = pytz.timezone("Asia/Shanghai")
+    time_str = time.strftime(local_format, time.localtime(int(time.time())))
+    dt = datetime.datetime.strptime(time_str, local_format)
+    utc_dt = dt.astimezone(beijing_tz)
+    utc_0 = calendar.timegm(utc_dt.timetuple())
+    beijing_0 = utc_0 - (utc_0 % (24 * 3600)) - 8 * 3600
+    return beijing_0
+
+
 class SmallHeartTask:
     def __init__(self, user: BiliUser):
         self.user = user
@@ -30,24 +43,11 @@ class SmallHeartTask:
         result = await WebApi.gifts_record(session)
         num = 0
         ruid_temp = ruid
+        beijing_0 = get_beijing_0()
         for i in result["list"]:
             if ruid_temp == None:
                 ruid = i["ruid"]
-            if (
-                i["gift_name"] == "小心心"
-                and int(
-                    calendar.timegm(
-                        time.strptime(
-                            time.strftime("%Y-%m-%d", time.gmtime(int(time.time()))),
-                            "%Y-%m-%d",
-                        )
-                    )
-                )
-                + 57600
-                < i["timestamp"]
-                < time.time()
-                and i["ruid"] == ruid
-            ):
+            if (i["gift_name"] == "小心心" and beijing_0 < i["timestamp"] < time.time() and i["ruid"] == ruid):
                 num += i["gift_num"]
                 rname = i["r_uname"]
         if num >= self.MAX_HEARTS_PER_DAY and ruid_temp:
