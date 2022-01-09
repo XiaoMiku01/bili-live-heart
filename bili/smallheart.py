@@ -190,6 +190,7 @@ class SmallHeartTask:
         )
         if remaining > 0:
             await self.do_work(remaining)
+            return
         await self.send_gifts(session)
 
     async def dispatch(self, room_infos):
