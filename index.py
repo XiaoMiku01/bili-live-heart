@@ -4,7 +4,7 @@ import datetime
 from bili.login import BiliUser
 from bili.smallheart import SmallHeartTask
 from bili.dailyclockin import DailyClockIn
-from push import serverchan
+from push import serverchan, ifttt_telegram
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -26,6 +26,8 @@ def main_handler(event, context):
     cookie = data["cookie"]
     ruid = int(data.get("ruid", 0))
     sendkey = data.get("sendkey", None)
+    ifttt_event_name = data.get("ifttt_telegram_event_name", None)
+    ifttt_key = data.get("ifttt_telegram_key", None)
     loop = asyncio.get_event_loop()
     message = ""
     try:
@@ -36,6 +38,8 @@ def main_handler(event, context):
     print(message)
     if sendkey:
         loop.run_until_complete(serverchan.push_message(sendkey, message))
+    if ifttt_event_name and ifttt_key:
+        loop.run_until_complete(ifttt_telegram.push_message(ifttt_event_name, ifttt_key, message))
     return True
 
 
@@ -46,6 +50,8 @@ def main():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     sendkey = config["serverchan"]["sendkey"]
+    ifttt_event_name = config["ifttt_telegram"]["event_name"]
+    ifttt_key = config["ifttt_telegram"]["key"]
     message = ""
     for u in config["users"]:
         if u["cookie"] == "":
@@ -58,6 +64,8 @@ def main():
     print(message)
     if sendkey:
         loop.run_until_complete(serverchan.push_message(sendkey, message))
+    if ifttt_event_name and ifttt_key:
+        loop.run_until_complete(ifttt_telegram.push_message(ifttt_event_name, ifttt_key, message))
 
 
 if __name__ == "__main__":

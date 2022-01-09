@@ -12,3 +12,8 @@ ruid = 0
 
 [serverchan] # Server酱sendkey(微信推送，选填)
 sendkey = ""
+
+# IFTTT Telegram Trigger配置（可用于推送消息到Telegram，选填）
+[ifttt_telegram]
+event_name = ""
+key = ""
