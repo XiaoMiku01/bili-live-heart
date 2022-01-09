@@ -10,5 +10,8 @@ ruid = 0
 
 # 多账号请以相同格式添加
 
+[cron] # Cron 表达式(五位数）
+cron = ""
+
 [serverchan] # Server酱sendkey(微信推送，选填)
 sendkey = ""
