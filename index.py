@@ -65,7 +65,6 @@ if __name__ == "__main__":
     schedulers.add_job(
         main,
         CronTrigger.from_crontab(cron),
-        id="main",
         next_run_time=datetime.datetime.now(),
     )
     schedulers.start()
