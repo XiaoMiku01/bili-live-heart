@@ -8,6 +8,7 @@ module.exports = {
     themeConfig: {
         logo: '/logo.png',
         repo: 'XiaoMiku01/bili-live-heart',
+        docsDir: 'docs',
         nav: [
             { text: '首页', link: '/' },
             { text: '指南', link: '/Guide/' },
