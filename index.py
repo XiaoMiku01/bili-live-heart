@@ -1,50 +1,70 @@
 import asyncio
 import json
-import sys
-import time
-from run import main
-from Daily import Live
+import datetime
+from bili.login import BiliUser
+from bili.smallheart import SmallHeartTask
+from bili.dailyclockin import DailyClockIn
+from push import serverchan
+
+from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.triggers.cron import CronTrigger
+
+
+async def run(user: BiliUser):
+    await user.login()
+    await SmallHeartTask(user).do_work()
+    await DailyClockIn(user).do_work()
+    await user.session.close()
+    message = f"用户:{user.uname}({user.uid})\n" + "\n".join(user.message)
+    if user.message_err:
+        message += "\n错误日志:\n" + "\n".join(user.message_err)
+    return message + "\n\n"
 
 
 def main_handler(event, context):
-    print("start!")
-    data = json.loads(context['environment'])
-    uid, cookie = data['uid'], data['cookie']
-    ruid = data.get('ruid', None)
-    sendkey = data.get('sendkey', None)
+    data = json.loads(context["environment"])
+    cookie = data["cookie"]
+    ruid = int(data.get("ruid", 0))
+    sendkey = data.get("sendkey", None)
     loop = asyncio.get_event_loop()
+    message = ""
     try:
-        loop.run_until_complete(main(uid, cookie, cloud_service=True))
+        user = BiliUser(cookie=cookie, ruid=ruid, cloud_service=True)
+        message = loop.run_until_complete(run(user))
     except Exception as e:
-        print(f"运行出错:{repr(e)}")
-        return False
-    time.sleep(10)
-    l = Live(uid, cookie, ruid, sendkey)
-    loop.run_until_complete(l.run())
-    print(l.message)
-    print('complete!')
+        message = str(e)
+    print(message)
+    if sendkey:
+        loop.run_until_complete(serverchan.push_message(sendkey, message))
     return True
 
 
-if __name__ == '__main__':
-    import toml
+def main():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    sendkey = config["serverchan"]["sendkey"]
+    message = ""
+    for u in config["users"]:
+        if u["cookie"] == "":
+            continue
+        try:
+            user = BiliUser(u["cookie"], u["ruid"])
+            message += loop.run_until_complete(run(user))
+        except Exception as e:
+            message += f"{e}\n"
+    print(message)
+    if sendkey:
+        loop.run_until_complete(serverchan.push_message(sendkey, message))
 
-    user_config = toml.load('./user.toml')
-    u = user_config['users']
-    uid = u['uid']
-    cookie = u['cookie']
-    ruid = u.get('ruid', None)
-    sendkey = u.get('sendkey', None)
-    assert uid and cookie, "用户配置不能为空"
-    print("start!")
-    loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(main(uid, cookie, cloud_service=False))
-    except Exception as e:
-        print(f"运行出错:{repr(e)}")
-        sys.exit(1)
-    time.sleep(10)
-    l = Live(uid, cookie, ruid, sendkey)
-    loop.run_until_complete(l.run())
-    print(l.message)
-    print('complete!')
+
+if __name__ == "__main__":
+    import toml
+    config = toml.load("user.toml")
+    cron = config["cron"]["cron"] if config["cron"]["cron"] else "0 0 * * *"
+    schedulers = BlockingScheduler()
+    schedulers.add_job(
+        main,
+        CronTrigger.from_crontab(cron),
+        next_run_time=datetime.datetime.now(),
+    )
+    schedulers.start()
