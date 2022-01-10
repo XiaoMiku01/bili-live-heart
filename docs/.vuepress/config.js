@@ -1,7 +1,7 @@
 module.exports = {
     title: '哔哩哔哩粉丝牌助手',
     description: '哔哩哔哩粉丝牌助手',
-    base: '/',
+    base: '/bili-live-heart/',
     head: [
         ['link', { rel: 'icon', href: '/logo.png' }],
     ],
@@ -9,12 +9,30 @@ module.exports = {
         logo: '/logo.png',
         repo: 'XiaoMiku01/bili-live-heart',
         nav: [
-            { text: 'Home', link: '/' },
-            { text: '指南', link: '/guide/' },
-            { text: '常见问题', link: '/qa/' },
+            { text: '首页', link: '/' },
+            { text: '指南', link: '/Guide/' },
+            { text: '0基础腾讯云函数部署', link: '/TencentCloud/' },
+            { text: '本地部署/Docker', link: '/LocalDocker/' },
+            { text: '常见问题', link: '/QA/' },
+            { text: '更新日志', link: '/Changelog/' },
         ],
         // search: false,
-        sidebar: 'auto',
+        sidebar: {
+            '/Guide/': [
+                '',
+                'Cookie',
+                'ServerChan',
+            ],
+            '/TencentCloud/': [
+                '',],
+            '/LocalDocker/': [
+                '',],
+            '/QA/': [
+                '',],
+            '/Changelog/': [
+                '',],
+
+        },
         editLinkText: '在 GitHub 上编辑此页',
         lastUpdatedText: '上次更新',
         contributorsText: '贡献者',
