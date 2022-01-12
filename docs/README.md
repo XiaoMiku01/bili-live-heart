@@ -2,7 +2,7 @@
 home: true
 heroImage: /logo.png
 heroText: 哔哩哔哩粉丝牌助手
-tagline: 基于Python3异步机制开发的全自动升级B站粉丝牌脚本
+tagline: 全自动升级B站粉丝牌脚本——每日自动获取小心心并赠送
 actionText: 快速上手 →
 actionLink: /guide/
 features:
