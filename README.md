@@ -21,8 +21,14 @@
 > 自动弹幕打卡所有粉丝牌房间 ✅   
 
 ## 详细文档！请仔细阅读！
-[文档](https://xiaomiku01.github.io/bili-live-heart/)  
-[国内镜像文档](https://vuepress-7gkbrsw594220fe1-1300043631.tcloudbaseapp.com/)
+如果文档没更新，请尝试`Ctrl` + `F5` 刷新网页  
+👉[文档](https://xiaomiku01.github.io/bili-live-heart/)  
+
+## 遇到问题？  
+ 先去看文档——>《常见问题》 没有？再去看issue  
+ 还没有解决方法就可以提出问题啦！提问题之前建议先看看这个  
+ 👉[《智慧的提问》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)
+
 ## 写在最后
 在部署或使用过程中遇到什么问题，请首先**仔细**阅读文档，若发现自己实在无法解决的问题，可以提交Issues或者B站私信 ~~@晓轩iMIKU~~ (号被封了) [@晓小轩iAS](https://space.bilibili.com/1772442517)(小号)提问，提问时请带上详细的日志或者运行结果截图，以便快速解决问题！  
 最后欢迎大家B站关注：  

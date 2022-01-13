@@ -5,7 +5,7 @@ import logging
 import aiohttp
 from .api import WebApi, WebApiRequestError
 
-__VERSION__ = "1.0.0"
+__VERSION__ = "1.0.1"
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -46,19 +46,22 @@ class BiliUser:
         self.message_err = []  # 错误信息
         self.message = []
         self.room_info = []
+        self.room_err_info = []
 
     def check_cookie(self, cookie):
         """
         检查cookie是否有效
         :return: True or False
         """
-        if "LIVE_BUVID=" in cookie and "bili_jct=" in cookie:
-            self.uid = re.search(r"DedeUserID=([^;]+);", cookie).group(1)
-            self.buvid = re.search(r"LIVE_BUVID=([^;]+);", cookie).group(1)
-            self.csrf = re.search(r"bili_jct=([^;]+);", cookie).group(1)
+        if "LIVE_BUVID=" in cookie and "bili_jct=" in cookie and "DedeUserID=" in cookie:
+            if cookie.strip()[-1] != ";":
+                cookie += cookie.strip() + ";"
+            self.uid = re.search(r"DedeUserID=([^;]+);", cookie).group(1).strip()
+            self.buvid = re.search(r"LIVE_BUVID=([^;]+);", cookie).group(1).strip()
+            self.csrf = re.search(r"bili_jct=([0-9a-zA-Z]{32})", cookie).group(1).strip()
             return cookie
         else:
-            message_err = "cookie无效,请`关闭`浏览器`无痕模式`重新抓取cookie后重试"
+            message_err = "cookie无效,重新抓取cookie后重试"
             logger.error(message_err)
             raise WebApiRequestError(message_err)
 
@@ -106,6 +109,6 @@ class BiliUser:
                 logger.error(message_err)
                 self.message_err.append(message_err)
         else:
-            message_err = "登录失败,请`关闭`浏览器`无痕模式`重新抓取cookie后重试"
+            message_err = "登录失败,重新抓取cookie后重试"
             logger.error(message_err)
             raise WebApiRequestError(message_err)

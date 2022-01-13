@@ -60,3 +60,13 @@
 ::: tip 提示
 如果你设置了Server酱推送，测试完也会收到推送消息哦~
 :::
+
+## 1.3如何升级云函数？  
+- 下载新版压缩包  
+- [Github](https://github.com/XiaoMiku01/bili-live-heart/releases/)
+- [百度云](https://pan.baidu.com/s/1CR4G6_59zzhASPwZR5wZcQ?pwd=soul) 提取码：soul   
+
+- 进入创建的函数，选择函数代码，选择本地上传zip包  
+![image_1642090877940.png](https://s2.loli.net/2022/01/14/u1oMOR2CgqlcWA7.png)  
+
+- 点击部署即可，然后就可以测试了，无需重新配置函数和环境变量

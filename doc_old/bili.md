@@ -1,6 +1,7 @@
 # B站Cookie获取教程  
 ## 第一步：
-打开你所用浏览器的**无痕模式**
+打开你所用浏览器的**无痕模式**  
+**如果还是抓不到就把无痕模式关了再试试！**
 - Microsoft Edge 浏览器  
 右上角：`新建 InPrivate 窗口`  
 ![新建 InPrivate 窗口](http://i0.hdslb.com/bfs/album/dc2f069dd147ac2ade026a2be28294a69aebcd38.png)  

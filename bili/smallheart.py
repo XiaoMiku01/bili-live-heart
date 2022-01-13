@@ -76,7 +76,7 @@ class SmallHeartTask:
             logger.info("开始赠送小心心")
             try:
                 rroomd_id, _, _, owner, ruid = [
-                    r for r in self.user.room_info if r.ruid == self.user.ruid
+                    r for r in (self.user.room_info+self.user.room_err_info) if r.ruid == self.user.ruid
                 ][0]
                 gifts = [g for g in (await WebApi.get_gift(session))]
                 hearts_num_send = await self.hearts_num_send(session, self.user.ruid)
@@ -156,7 +156,8 @@ class SmallHeartTask:
                     room_info = RoomInfo(room_id, parent_area_id, area_id, owner, ruid)
 
                     if parent_area_id == 0 or area_id == 0:
-                        logger.error(f"Invalid room info: {room_info}")
+                        # logger.error(f"Invalid room info: {room_info}")
+                        self.user.room_err_info.append(room_info)
                         continue
                     if m["target_id"] == self.user.ruid:
                         self.user.medal_id = m["medal_id"]

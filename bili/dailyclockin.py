@@ -18,7 +18,7 @@ class DailyClockIn:
     async def do_work(self):
         logger.info("开始每日弹幕打卡任务")
         err_num = 0
-        for room in self.user.room_info:
+        for room in (self.user.room_info+self.user.room_err_info):
             try:
                 await WebApi.send_msg(self.user.session, room.room_id, self.user.csrf)
                 logger.info(f"{room.owner}({room.ruid})直播间打卡成功")
