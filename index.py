@@ -4,8 +4,7 @@ import datetime
 from bili.login import BiliUser
 from bili.smallheart import SmallHeartTask
 from bili.dailyclockin import DailyClockIn
-from push import serverchan
-
+from push import pushaio
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 
@@ -25,24 +24,23 @@ def main_handler(event, context):
     data = json.loads(context["environment"])
     cookie = data["cookie"]
     ruid = int(data.get("ruid", 0))
-    sendkey = data.get("sendkey", None)
+    push = eval(data["onepush"])
     loop = asyncio.get_event_loop()
     message = ""
     try:
         user = BiliUser(cookie=cookie, ruid=ruid, cloud_service=True)
-        message = loop.run_until_complete(run(user))
+        message += loop.run_until_complete(run(user))
     except Exception as e:
-        message = str(e)
+        message += str(e)
     print(message)
-    if sendkey:
-        loop.run_until_complete(serverchan.push_message(sendkey, message))
+    if pushaio:
+        pushaio.notify_me(push, f'【粉丝牌助手推送】', message.replace("\n", "\n\n"))
     return True
 
 
 def main():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    sendkey = config["serverchan"]["sendkey"]
     message = ""
     for u in config["users"]:
         if u["cookie"] == "":
@@ -52,13 +50,15 @@ def main():
             message += loop.run_until_complete(run(user))
         except Exception as e:
             message += f"{e}\n"
+    push = eval(config['onepush'].get('onepush'))
     print(message)
-    if sendkey:
-        loop.run_until_complete(serverchan.push_message(sendkey, message))
+    if pushaio:
+        pushaio.notify_me(push, f'【粉丝牌助手推送】', message.replace("\n", "\n\n"))
 
 
 if __name__ == "__main__":
     import toml
+
     config = toml.load("user.toml")
     cron = config["cron"]["cron"] if config["cron"]["cron"] else "0 0 * * *"
     schedulers = BlockingScheduler()
