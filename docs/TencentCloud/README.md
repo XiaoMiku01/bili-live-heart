@@ -35,7 +35,7 @@
 **key栏中的字母全为小写 右边一栏才是你填的**
 :::  
 
-![image_1641824927711.png](https://s2.loli.net/2022/01/10/nVmWzYlE9bTUhiM.png)  
+![IMG_20220114_135201.png](https://s2.loli.net/2022/01/14/rcziwN8IVl2vAxT.png)  
 
 - 其他配置不变 - 展开触发器配置  
 选择自定义创建 - 触发方式：定时触发 - 触发周期：每一天
