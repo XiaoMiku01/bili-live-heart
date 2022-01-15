@@ -27,15 +27,7 @@ def get_config():
         with open("./local_config.json", "r") as f:
             config = json.loads(f.read())
     except:
-        config = {
-            "users": [
-                {
-                    "cookie": os.getenv("cookie") or "",
-                    "ruid": int(os.getenv("ruid")),
-                }
-            ],
-            "sendkey": os.getenv("sendkey") or "",
-        }
+        config = json.loads(os.getenv("config"))
     return config
 
 
