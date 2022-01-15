@@ -1,4 +1,4 @@
-name: sin_in
+name: action_bili_live_heart
 
 on:
     schedule:
