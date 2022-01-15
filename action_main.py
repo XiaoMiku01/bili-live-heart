@@ -11,9 +11,6 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 
-DEBUG = 1
-
-
 async def run(user: BiliUser):
     await user.login()
     await SmallHeartTask(user).do_work()
@@ -26,13 +23,10 @@ async def run(user: BiliUser):
 
 
 def get_config():
-    if DEBUG:
+    try:
         with open("./local_config.json", "r") as f:
             config = json.loads(f.read())
-            print("===============config===============")
-            print(config)
-            print(config['sendkey'])
-    else:
+    except:
         config = {
             "users": [
                 {
