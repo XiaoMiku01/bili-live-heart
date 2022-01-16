@@ -3,7 +3,7 @@ name: action_bili_live_heart
 on:
     schedule:
         # * is a special character in YAML so you have to quote this string
-        - cron: '3 8 * * *'
+        - cron: '3 21 * * *'
     workflow_dispatch:
 
 jobs:
