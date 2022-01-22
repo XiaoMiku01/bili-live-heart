@@ -10,6 +10,9 @@ from asyncio import CancelledError
 from .api import WebApi, medals, get_info, WebApiRequestError
 from .login import BiliUser
 
+if not hasattr(asyncio, "create_task"):
+    asyncio.create_task = asyncio.ensure_future
+
 
 RoomInfo = namedtuple("RoomInfo", "room_id, parent_area_id, area_id, owner, ruid")
 logging.basicConfig(
