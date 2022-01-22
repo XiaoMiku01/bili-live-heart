@@ -46,7 +46,6 @@ class BiliUser:
         self.message_err = []  # 错误信息
         self.message = []
         self.room_info = []
-        self.room_err_info = []
 
     def check_cookie(self, cookie):
         """

@@ -10,9 +10,6 @@ from asyncio import CancelledError
 from .api import WebApi, medals, get_info, WebApiRequestError
 from .login import BiliUser
 
-if not hasattr(asyncio, "create_task"):
-    asyncio.create_task = asyncio.ensure_future
-
 
 RoomInfo = namedtuple("RoomInfo", "room_id, parent_area_id, area_id, owner, ruid")
 logging.basicConfig(
@@ -75,8 +72,23 @@ class SmallHeartTask:
         if self.user.ruid:
             logger.info("开始赠送小心心")
             try:
+                self.user.room_info = []
+                async for m in medals(session):
+                    try:
+                        info = await get_info(session, m["roomid"])
+                    except KeyError:
+                        continue
+                    room_id = info["room_id"]
+                    area_id = info["area_id"]
+                    parent_area_id = info["parent_area_id"]
+                    owner = m["uname"]
+                    ruid = m["target_id"]
+                    room_info = RoomInfo(room_id, parent_area_id, area_id, owner, ruid)
+                    if m["target_id"] == self.user.ruid:
+                        self.user.medal_id = m["medal_id"]
+                    self.user.room_info.append(room_info)
                 rroomd_id, _, _, owner, ruid = [
-                    r for r in (self.user.room_info+self.user.room_err_info) if r.ruid == self.user.ruid
+                    r for r in self.user.room_info if r.ruid == self.user.ruid
                 ][0]
                 gifts = [g for g in (await WebApi.get_gift(session))]
                 hearts_num_send = await self.hearts_num_send(session, self.user.ruid)
@@ -156,11 +168,7 @@ class SmallHeartTask:
                     room_info = RoomInfo(room_id, parent_area_id, area_id, owner, ruid)
 
                     if parent_area_id == 0 or area_id == 0:
-                        # logger.error(f"Invalid room info: {room_info}")
-                        self.user.room_err_info.append(room_info)
                         continue
-                    if m["target_id"] == self.user.ruid:
-                        self.user.medal_id = m["medal_id"]
                     room_infos.append(room_info)
                     count += 1
                     if count == MAX_HEARTS_PER_DAY:

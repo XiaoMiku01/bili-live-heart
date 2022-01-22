@@ -20,8 +20,8 @@
 - 选择函数服务 - 新建  
 ![image_1641823807969.png](https://s2.loli.net/2022/01/10/aKD7En2ZugewhzV.png)  
 
-- 选择自定义创建 - 事件函数-函数名称随意-地域国内随意 - 代码部署 - 运行环境选择Python3.6  
-![image_1641823844125.png](https://s2.loli.net/2022/01/10/4ypeOKRalcLPTrW.png)  
+- 从头开始 - 事件函数-函数名称随意-地域国内随意 - 代码部署 - 运行环境选择Python3.7  
+![74FXSs.png](https://s4.ax1x.com/2022/01/23/74FXSs.png)  
 
 - 提交方法选择本地上传zip包 - 执行方法**默认不要改** - 函数代码上传刚刚下载的压缩包  
 ![image_1641823880776.png](https://s2.loli.net/2022/01/10/CNfU2OjkGDWSbKP.png) 
