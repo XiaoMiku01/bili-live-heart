@@ -7,7 +7,7 @@
 
 ## 1.1 克隆本项目至本地并进入目录  
 ``` shell
-git clone https://github.com/XiaoMiku01/bili-live-heart
+git clone https://github.com/XiaoMiku01/bili-live-heart.git
 cd bili-live-heart
 ```
 ## 1.2 安装所需模块  
