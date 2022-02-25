@@ -34,3 +34,8 @@
 在部署或使用过程中遇到什么问题，请首先**仔细**阅读文档，若发现自己实在无法解决的问题，可以提交Issues或者B站私信 ~~@晓轩iMIKU~~ (号被封了) [@晓小轩iAS](https://space.bilibili.com/1772442517)(小号)提问，提问时请带上详细的日志或者运行结果截图，以便快速解决问题！  
 最后欢迎大家B站关注：  
 [@嘉然今天吃什么](https://space.bilibili.com/672328094/) [@向晚大魔王](https://space.bilibili.com/672346917/) [@乃琳Queen](https://space.bilibili.com/672342685/) [@贝拉kira](https://space.bilibili.com/672353429/) [@珈乐Carol](https://space.bilibili.com/351609538/)
+
+## 捐赠  
+~~一瓶饮料？~~  
+<a href="https://imgtu.com/i/bVCPlF"><img src="https://s4.ax1x.com/2022/02/26/bVCPlF.md.jpg" alt="bVCPlF.jpg" border="0" width="200"/></a>
+<a href="https://imgtu.com/i/bVCSYV"><img src="https://s4.ax1x.com/2022/02/26/bVCSYV.md.jpg" alt="bVCSYV.jpg" border="0" width="200" /></a>
