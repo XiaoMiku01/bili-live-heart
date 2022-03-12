@@ -1,8 +1,8 @@
 # 腾讯云函数部署
 
 ::: tip 提示
-此方式目前完全免费！部署前请确保已经获取到[**B站cookie**](/bili-live-heart/Guide/Cookie)和[**SendKey**](/bili-live-heart/Guide/SendKey)  
-**云函数版暂不支持一个函数多个账号，如有需要可以自己新建函数（反正不要钱~~）**  
+~~此方式目前完全免费！~~**2022-1-1起 腾讯云函数已经不免费 价格是0.03元/小时 本函数运行不会超过一小时 也就是3分钱/天，一年10块钱左右 可以先在腾讯云充值10元** 部署前请确保已经获取到[**B站cookie**](/bili-live-heart/Guide/Cookie)和[**SendKey**](/bili-live-heart/Guide/SendKey)  
+**云函数版暂不支持一个函数多个账号，如有需要可以自己新建函数**  
 **来的小可爱记得认真看哦**  
 :::
 
