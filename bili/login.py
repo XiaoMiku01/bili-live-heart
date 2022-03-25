@@ -69,7 +69,7 @@ class BiliUser:
         检查版本
         :return:
         """
-        url = "https://gitee.com/XiaoMiku01/bili-live-heart/raw/master/version.json"
+        url = "https://cdn.jsdelivr.net/gh/XiaoMiku01/bili-live-heart/version.json"
         res = await self.session.get(url)
         if res.status == 200:
             version_data = json.loads(await res.text())
