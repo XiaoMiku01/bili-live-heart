@@ -5,7 +5,7 @@ import logging
 import aiohttp
 from .api import WebApi, WebApiRequestError
 
-__VERSION__ = "1.1.0"
+__VERSION__ = "1.2.0"
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -71,7 +71,7 @@ class BiliUser:
         """
         url = "https://cdn.jsdelivr.net/gh/XiaoMiku01/bili-live-heart/version.json"
         res = await self.session.get(url)
-        if res.status == 200:
+        try:
             version_data = json.loads(await res.text())
             if __VERSION__ == version_data["version"]:
                 logger.info("检测到当前版本为最新版本(v{})".format(__VERSION__))
@@ -79,8 +79,9 @@ class BiliUser:
                 message = f"当前版本为: v{__VERSION__}, 最新版本为: v{version_data['version']}, 请尽量更新后使用"
                 logger.warning(message)
                 self.message.append(message)
-        else:
+        except:
             logger.error("检测版本失败")
+            raise WebApiRequestError("检测版本失败")
 
     async def login(self):
         """
@@ -98,6 +99,12 @@ class BiliUser:
                     login_data["data"]["uname"], login_data["data"]["mid"]
                 )
             )
+            logger.info("本脚本使用条件：必须关注A-SOUL五人B站账号!")
+            if tem := await WebApi.secret_player(self.session):
+                message = f"本脚本使用条件：必须关注A-SOUL五人B站账号! 检测到你还没有关注：{'、'.join(tem)} ,请关注后再来使用"
+                logger.error(message)
+                self.message_err.append(message)
+                raise Exception(message)
             try:
                 sign = await WebApi.do_sign(self.session)
                 message = f"直播区签到成功(本月签到天数:{sign['hadSignDays']}/{sign['allDays']})"
@@ -108,6 +115,6 @@ class BiliUser:
                 logger.error(message_err)
                 self.message_err.append(message_err)
         else:
-            message_err = "登录失败,重新抓取cookie后重试"
+            message_err = "登录失败,重新获取cookie后重试"
             logger.error(message_err)
             raise WebApiRequestError(message_err)
