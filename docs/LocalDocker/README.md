@@ -54,6 +54,13 @@ python3 index.py
 本项目内置定时模块，并且默认在首次运行时执行一次，之后只需程序后台保持运行即可，可以使用screen tmux 等工具保持后台运行  
 :::
 
+## 1.5 本地更新  
+本地更新：命令行直接运行命令拉去最新仓库即可  
+ ```
+ git fetch origin master //从远程主机的master分支拉取最新内容 
+git merge FETCH_HEAD    //将拉取下来的最新内容合并到当前所在的分支中
+ ```
+
 # Docker
 
 ## 随手写的Dockerfile

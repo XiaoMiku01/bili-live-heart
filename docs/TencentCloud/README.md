@@ -66,6 +66,9 @@
 - [Github](https://github.com/XiaoMiku01/bili-live-heart/releases/)
 - [百度云](https://pan.baidu.com/s/1CR4G6_59zzhASPwZR5wZcQ?pwd=soul) 提取码：soul   
 
+- 首先看你原来的旧版本函数的Python版本号，如果不为python3.7,请删除该函数，重新创建！！若为3.7继续往下看  
+[![qUa9kd.md.png](https://s1.ax1x.com/2022/03/26/qUa9kd.md.png)](https://imgtu.com/i/qUa9kd)
+
 - 进入创建的函数，选择函数代码，选择本地上传zip包  
 ![image_1642090877940.png](https://s2.loli.net/2022/01/14/u1oMOR2CgqlcWA7.png)  
 
