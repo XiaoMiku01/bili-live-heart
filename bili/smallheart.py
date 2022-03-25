@@ -65,10 +65,11 @@ class SmallHeartTask:
             if h["gift_name"] == "小心心" and h["corner_mark"] == "7天"
         ]
         if len(hearts_7_days):
+            sum_of_7_day_hearts  = sum( [ hearts["gift_num"] for hearts in hearts_7_days ] )
             logger.info(
-                f"今日以获取{hearts_7_days[0]['gift_num']}个小心心,剩余{self.MAX_HEARTS_PER_DAY-hearts_7_days[0]['gift_num']}个"
+                f"今日以获取{sum_of_7_day_hearts}个小心心,剩余{self.MAX_HEARTS_PER_DAY-sum_of_7_day_hearts}个"
             )
-            return hearts_7_days[0]["gift_num"]
+            return sum_of_7_day_hearts
         return 0
 
     async def send_gifts(self, session):
