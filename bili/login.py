@@ -69,7 +69,7 @@ class BiliUser:
         检查版本
         :return:
         """
-        url = "https://cdn.jsdelivr.net/gh/XiaoMiku01/bili-live-heart/version.json"
+        url = "https://cdn.jsdelivr.net/gh/XiaoMiku01/bili-live-heart@latest/version.json"
         res = await self.session.get(url)
         try:
             version_data = json.loads(await res.text())

@@ -120,19 +120,19 @@ class SmallHeartTask:
                             if g["gift_num"] <= 0:
                                 continue
                         try:
-                            # await WebApi.send_gifts(
-                            #     session=session,
-                            #     uid=self.user.uid,
-                            #     bag_id=g["bag_id"],
-                            #     gift_id=g["gift_id"],
-                            #     gift_num=g["gift_num"],
-                            #     ruid=ruid,
-                            #     room_id=rroomd_id,
-                            #     csrf=self.user.csrf,
-                            # )
-                            # message = f"赠送{owner}(UID:{ruid} 房间号:{rroomd_id}){g['gift_name']}x{g['gift_num']}成功"
-                            # logger.info(message)
-                            # self.user.message.append(message)
+                            await WebApi.send_gifts(
+                                session=session,
+                                uid=self.user.uid,
+                                bag_id=g["bag_id"],
+                                gift_id=g["gift_id"],
+                                gift_num=g["gift_num"],
+                                ruid=ruid,
+                                room_id=rroomd_id,
+                                csrf=self.user.csrf,
+                            )
+                            message = f"赠送{owner}(UID:{ruid} 房间号:{rroomd_id}){g['gift_name']}x{g['gift_num']}成功"
+                            logger.info(message)
+                            self.user.message.append(message)
                             await asyncio.sleep(2)
                         except WebApiRequestError as e:
                             logger.error(e)
