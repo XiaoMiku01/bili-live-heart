@@ -31,7 +31,7 @@
 ## 详细文档！请仔细阅读！
 如果文档没更新，请尝试`Ctrl` + `F5` 刷新网页  
 👉[文档](https://xiaomiku01.github.io/bili-live-heart/)  
-
+答疑交流群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=GbbhabOOxIlmUDlL3jFSIxFGAS-O1nsy&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="辣条交流群" title="辣条交流群"></a> 1106094437 （偷隔壁`B站直播间挂机助手`[[andywang425/BLTH](https://github.com/andywang425/BLTH)]的,用一个群凑合了）
 ## 遇到问题？  
  先去看文档——>《常见问题》 没有？再去看issue  
  还没有解决方法就可以提出问题啦！提问题之前建议先看看这个  
