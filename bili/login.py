@@ -69,9 +69,9 @@ class BiliUser:
         检查版本
         :return:
         """
-        url = "https://cdn.jsdelivr.net/gh/XiaoMiku01/bili-live-heart@latest/version.json"
-        res = await self.session.get(url)
         try:
+            url = "https://cdn.jsdelivr.net/gh/XiaoMiku01/bili-live-heart@latest/version.json"
+            res = await self.session.get(url)
             version_data = json.loads(await res.text())
             if __VERSION__ == version_data["version"]:
                 logger.info("检测到当前版本为最新版本(v{})".format(__VERSION__))
@@ -81,7 +81,7 @@ class BiliUser:
                 self.message.append(message)
         except:
             logger.error("检测版本失败")
-            raise WebApiRequestError("检测版本失败")
+            # raise WebApiRequestError("检测版本失败")
 
     async def login(self):
         """
