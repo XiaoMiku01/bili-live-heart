@@ -1,6 +1,8 @@
 import asyncio
 import json
 import datetime
+import os
+import sys
 from bili.login import BiliUser
 from bili.smallheart import SmallHeartTask
 from bili.dailyclockin import DailyClockIn
@@ -53,13 +55,17 @@ def main():
         except Exception as e:
             message += f"{e}\n"
     print(message)
-    if sendkey:
+    if sendkey and len(sendkey) > 0:
         loop.run_until_complete(serverchan.push_message(sendkey, message))
 
 
 if __name__ == "__main__":
-    import toml
-    config = toml.load("user.toml")
+    if "--fromdocker" in sys.argv:
+        config = {"users": [{"cookie": os.environ["COOKIE"], "ruid":int(os.environ["RUID"])}], "cron": {
+            "cron": os.environ["CRON"]}, "serverchan": {"sendkey": os.environ["SERVER_CHAN_SENDKEY"]}}
+    else:
+        import toml
+        config = toml.load("user.toml")
     cron = config["cron"]["cron"] if config["cron"]["cron"] else "0 0 * * *"
     schedulers = BlockingScheduler()
     schedulers.add_job(
