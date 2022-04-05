@@ -4,6 +4,7 @@ ENV COOKIE=""
 ENV RUID="0"
 ENV CRON="0 0 * * *"
 ENV SERVER_CHAN_SENDKEY=""
+ENV TZ="Asia/Shanghai"
 
 COPY . .
 
