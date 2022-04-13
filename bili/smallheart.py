@@ -14,7 +14,7 @@ if not hasattr(asyncio, "create_task"):
     asyncio.create_task = asyncio.ensure_future
 
 
-RoomInfo = namedtuple("RoomInfo", "room_id, parent_area_id, area_id, owner, ruid")
+RoomInfo = namedtuple("RoomInfo", "room_id, parent_area_id, area_id, owner, ruid, level")
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
@@ -65,22 +65,44 @@ class SmallHeartTask:
             if h["gift_name"] == "小心心" and h["corner_mark"] == "7天"
         ]
         if len(hearts_7_days):
+            sum_of_7_day_hearts = sum([hearts["gift_num"] for hearts in hearts_7_days])
             logger.info(
-                f"今日以获取{hearts_7_days[0]['gift_num']}个小心心,剩余{self.MAX_HEARTS_PER_DAY-hearts_7_days[0]['gift_num']}个"
+                f"今日已获取{sum_of_7_day_hearts}个小心心,剩余{self.MAX_HEARTS_PER_DAY-sum_of_7_day_hearts}个"
             )
-            return hearts_7_days[0]["gift_num"]
+            return sum_of_7_day_hearts
         return 0
 
     async def send_gifts(self, session):
         if self.user.ruid:
             logger.info("开始赠送小心心")
             try:
-                rroomd_id, _, _, owner, ruid = [
+                self.user.room_info = []
+                async for m in medals(session):
+                    try:
+                        info = await get_info(session, m["roomid"])
+                    except KeyError:
+                        continue
+                    room_id = info["room_id"]
+                    area_id = info["area_id"]
+                    parent_area_id = info["parent_area_id"]
+                    owner = m["uname"]
+                    ruid = m["target_id"]
+                    level = m["level"]
+                    room_info = RoomInfo(room_id, parent_area_id, area_id, owner, ruid, level)
+                    if m["target_id"] == self.user.ruid:
+                        self.user.medal_id = m["medal_id"]
+                    self.user.room_info.append(room_info)
+                rroomd_id, _, _, owner, ruid, level = [
                     r for r in self.user.room_info if r.ruid == self.user.ruid
                 ][0]
                 gifts = [g for g in (await WebApi.get_gift(session))]
                 hearts_num_send = await self.hearts_num_send(session, self.user.ruid)
                 if gifts:
+                    if level >= 20:
+                        message_err = f"{owner}({ruid})的等级{level}已经超过20级，不需要赠送小心心"
+                        logger.error(message_err)
+                        self.user.message.append(message_err)
+                        return
                     for g in gifts:
                         if g["gift_name"] not in ["小心心", "辣条"]:
                             continue
@@ -153,13 +175,11 @@ class SmallHeartTask:
                     parent_area_id = info["parent_area_id"]
                     owner = m["uname"]
                     ruid = m["target_id"]
-                    room_info = RoomInfo(room_id, parent_area_id, area_id, owner, ruid)
+                    level = m["level"]
+                    room_info = RoomInfo(room_id, parent_area_id, area_id, owner, ruid, level)
 
                     if parent_area_id == 0 or area_id == 0:
-                        logger.error(f"Invalid room info: {room_info}")
                         continue
-                    if m["target_id"] == self.user.ruid:
-                        self.user.medal_id = m["medal_id"]
                     room_infos.append(room_info)
                     count += 1
                     if count == MAX_HEARTS_PER_DAY:

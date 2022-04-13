@@ -4,13 +4,18 @@
 <div align="center">
 
 # **Bilibili粉丝牌助手**  
-
+### 当前版本：1.2.1
  </div>
 
-1-23更新 **请大家及时更新代码，云函数版请删除先前创建的函数，重新下载压缩包部署** 当前版本v1.1.0-EX
+# 【已修复】 3-26 小心心助手全崩了，原因是版本检测失败  
 
-基于Python3异步开发的自动获取每日小心心及直播间自动打卡脚本  
-运行环境：不低于Python3.6  
+## 如何更新：
+
+- [腾讯云函数更新教程](https://xiaomiku01.github.io/bili-live-heart/TencentCloud/#_1-3%E5%A6%82%E4%BD%95%E5%8D%87%E7%BA%A7%E4%BA%91%E5%87%BD%E6%95%B0)  
+- [本地更新](https://xiaomiku01.github.io/bili-live-heart/LocalDocker/#_1-5-%E6%9C%AC%E5%9C%B0%E6%9B%B4%E6%96%B0)
+
+基于Python3自动获取每日小心心及直播间自动打卡脚本  
+运行环境：不低于Python3.7  
 ***  
 
 ## 已实现功能  
@@ -20,10 +25,19 @@
 > Server酱微信推送 ✅  
 > 自动弹幕打卡所有粉丝牌房间 ✅   
 
+## 说明！ 
+本项目自 1.2.0 版本之后，所挂B站账号**必须**关注A-SOUL**五人**B站账号，否者脚本拒绝运行！
+
 ## 详细文档！请仔细阅读！
-[文档](https://xiaomiku01.github.io/bili-live-heart/)  
-[国内镜像文档](https://vuepress-7gkbrsw594220fe1-1300043631.tcloudbaseapp.com/)  
-[OnePush使用指南](https://github.com/Huli-fox/bili-live-heart/blob/dev/docs/Guide/OnePush.md)  
+如果文档没更新，请尝试`Ctrl` + `F5` 刷新网页  
+👉[文档](https://xiaomiku01.github.io/bili-live-heart/)  
+👉[OnePush使用指南](https://github.com/Huli-fox/bili-live-heart/blob/dev/docs/Guide/OnePush.md)  
+
+## 遇到问题？  
+ 先去看文档——>《常见问题》 没有？再去看issue  
+ 还没有解决方法就可以提出问题啦！提问题之前建议先看看这个  
+ 👉[《智慧的提问》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)
+
 ## 写在最后
 在部署或使用过程中遇到什么问题，请首先**仔细**阅读文档，若发现自己实在无法解决的问题，可以提交Issues或者B站私信 ~~@晓轩iMIKU~~ (号被封了) [@晓小轩iAS](https://space.bilibili.com/1772442517)(小号)提问，提问时请带上详细的日志或者运行结果截图，以便快速解决问题！  
 最后欢迎大家B站关注：  

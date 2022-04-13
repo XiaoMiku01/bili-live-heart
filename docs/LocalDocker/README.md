@@ -7,7 +7,7 @@
 
 ## 1.1 克隆本项目至本地并进入目录  
 ``` shell
-git clone https://github.com/XiaoMiku01/bili-live-heart
+git clone https://github.com/XiaoMiku01/bili-live-heart.git
 cd bili-live-heart
 ```
 ## 1.2 安装所需模块  
@@ -54,7 +54,52 @@ python3 index.py
 本项目内置定时模块，并且默认在首次运行时执行一次，之后只需程序后台保持运行即可，可以使用screen tmux 等工具保持后台运行  
 :::
 
+## 1.5 本地更新  
+本地更新：命令行直接运行命令拉取最新仓库即可  
+ ```
+ git fetch origin master //从远程主机的master分支拉取最新内容 
+git merge FETCH_HEAD    //将拉取下来的最新内容合并到当前所在的分支中
+ ```
+
 # Docker
 
-## 随手写的Dockerfile
-没从环境拿变量，先填写配置再构建镜像的，反正能跑，开摆！
+## 2.1 拉取Docker镜像至本地
+``` shell
+docker pull xiaomiku01/bili-live-heart
+```
+## 2.2 配置用户信息
+创建文件env.list，具体内容参考本地部署的部分
+```
+# B站cookie
+COOKIE=""
+# 需要自动打卡主播uid
+RUID=0
+# Cron 表达式
+CRON="0 0 * * *"
+# Server酱sendkey，选填
+SERVER_CHAN_SENDKEY=""
+```
+::: tip 提示
+在docker模式下不支持多用户，可以通过并行启动多个容器来达到多用户的目的
+:::
+## 2.3 创建并运行容器
+``` shell
+docker run -d -name bili-live-heart1 --env-file env.list xiaomiku01/bili-live-heart
+```
+如果不希望创建env.list文件，此处也可以把用户配置直接写在命令里
+``` shell
+docker run -d -name bili-live-heart1 -e COOKIE="" -e RUID=0 -e CRON="0 0 * * *" -e SERVER_CHAN_SENDKEY="" xiaomiku01/bili-live-heart
+```
+## 2.4 本地更新
+docker本身没有更新机制，更新容器需要停止并删除容器，重新拉取镜像并重建容器
+``` shell
+docker stop bili-live-heart1
+docker rm bili-live-heart1
+docker pull xiaomiku01/bili-live-heart
+docker run -d -name bili-live-heart1 --env-file env.list xiaomiku01/bili-live-heart
+```
+不过这里也可以讨个巧，在docker运行中进入容器中通过git更新代码，然后重启容器，虽然也比较麻烦，但似乎要好一点
+``` shell
+docker exec -it -w /app/bili-live-heart bili-live-heart1 git pull
+docker restart bili-live-heart1
+```

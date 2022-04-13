@@ -1,3 +1,4 @@
+import asyncio
 import time
 import json
 import hmac
@@ -231,21 +232,6 @@ class WebApi:
         return await cls._get(session, url, params={"mid": mid})
 
     @classmethod
-    async def secret_player(cls, session: ClientSession, csrf):
-        url = "https://api.bilibili.com/x/relation/modify"
-        fid = random.choice(
-            ["672342685", "672346917", "672328094", "351609538", "672353429"]
-        )
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        data = {
-            "fid": fid,
-            "act": 1,
-            "re_src": 11,
-            "csrf": csrf,
-        }
-        return await cls._post(session, url, data=urlencode(data), headers=headers)
-
-    @classmethod
     async def wear_medal(cls, session: ClientSession, medal_id, csrf):
         url = "https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/wear"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
@@ -263,6 +249,20 @@ class WebApi:
             "csrf": csrf,
         }
         return await cls._post(session, url, data=urlencode(data), headers=headers)
+
+    @classmethod
+    async def secret_player(cls, session: ClientSession):
+        url = "https://api.bilibili.com/x/space/acc/info?mid={}"
+        asouls = ["672342685", "672346917", "672328094", "351609538", "672353429"]
+        tem = []
+        for asoul in asouls:
+            data = await cls._get(session, url.format(asoul))
+            await asyncio.sleep(1)
+            if data["is_followed"] == True:
+                continue
+            else:
+                tem.append(data["name"])
+        return tem
 
 
 async def calc_sign(data, secret_rule):

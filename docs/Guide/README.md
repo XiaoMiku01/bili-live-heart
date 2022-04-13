@@ -5,9 +5,9 @@
 :::
 
 ## 开始 
-#### 首先！  
+#### 首先！无论你是大佬还是0基础的小白，都必须做的事！
 👉[【获取你的B站Cookie】](Cookie.md) - Cookie是啥，不是吃的那个！  
-👉[【OnePush使用指南】](OnePush.md) - 字面意思，推送用的，理解不能的请使用原项目Server酱[Bilibili粉丝牌助手](https://github.com/XiaoMiku01/bili-live-heart)
+👉[【获取你的「Server酱」Sendkey】](ServerChan.md) - 微信推送用的，不用的可以跳过，但还是建议大家使用
 
 ## 选择你的部署方式
 #### 如果你是0基础的小白，亦或是懒得折腾 
