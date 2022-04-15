@@ -1,10 +1,12 @@
 import asyncio
 import json
 import datetime
+import os
+import sys
 from bili.login import BiliUser
 from bili.smallheart import SmallHeartTask
 from bili.dailyclockin import DailyClockIn
-from push import serverchan
+from push import pushaio
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -25,7 +27,7 @@ def main_handler(event, context):
     data = json.loads(context["environment"])
     cookie = data["cookie"]
     ruid = int(data.get("ruid", 0))
-    sendkey = data.get("sendkey", None)
+    onepush = eval(data["onepush"])
     loop = asyncio.get_event_loop()
     message = ""
     try:
@@ -34,15 +36,15 @@ def main_handler(event, context):
     except Exception as e:
         message = str(e)
     print(message)
-    if sendkey:
-        loop.run_until_complete(serverchan.push_message(sendkey, message))
+    if onepush:
+        pushaio.notify_me(onepush, f'【粉丝牌助手推送】', message.replace("\n", "\n\n"))
     return True
 
 
 def main():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    sendkey = config["serverchan"]["sendkey"]
+    onepush = eval(config['onepush'].get('onepush'))
     message = ""
     for u in config["users"]:
         if u["cookie"] == "":
@@ -53,13 +55,17 @@ def main():
         except Exception as e:
             message += f"{e}\n"
     print(message)
-    if sendkey:
-        loop.run_until_complete(serverchan.push_message(sendkey, message))
+    if onepush:
+        pushaio.notify_me(onepush, f'【粉丝牌助手推送】', message.replace("\n", "\n\n"))
 
 
 if __name__ == "__main__":
-    import toml
-    config = toml.load("user.toml")
+    if "--fromdocker" in sys.argv:
+        config = {"users": [{"cookie": os.environ["COOKIE"], "ruid":int(os.environ["RUID"])}], "cron": {
+            "cron": os.environ["CRON"]}, "serverchan": {"sendkey": os.environ["SERVER_CHAN_SENDKEY"]}}
+    else:
+        import toml
+        config = toml.load("user.toml")
     cron = config["cron"]["cron"] if config["cron"]["cron"] else "0 0 * * *"
     schedulers = BlockingScheduler()
     schedulers.add_job(

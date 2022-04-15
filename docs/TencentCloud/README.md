@@ -1,8 +1,8 @@
 # 腾讯云函数部署
 
 ::: tip 提示
-此方式目前完全免费！部署前请确保已经获取到[**B站cookie**](/Guide/Cookie)和[**SendKey**](/Guide/SendKey)  
-**云函数版暂不支持一个函数多个账号，如有需要可以自己新建函数（反正不要钱~~）**  
+~~此方式目前完全免费！**2021-11-1起 腾讯云函数已经不免费 价格是0.03元/小时 本函数运行不会超过一小时 也就是3分钱/天，一年10块钱左右 可以先在腾讯云充值10元**~~**似乎又有免费额度了🤔** 部署前请确保已经获取到[**B站cookie**](/bili-live-heart/Guide/Cookie)和[**SendKey**](/bili-live-heart/Guide/ServerChan)  
+**云函数版暂不支持一个函数多个账号，如有需要可以自己新建函数**  
 **来的小可爱记得认真看哦**  
 :::
 
@@ -20,8 +20,8 @@
 - 选择函数服务 - 新建  
 ![image_1641823807969.png](https://s2.loli.net/2022/01/10/aKD7En2ZugewhzV.png)  
 
-- 选择自定义创建 - 事件函数-函数名称随意-地域国内随意 - 代码部署 - 运行环境选择Python3.6  
-![image_1641823844125.png](https://s2.loli.net/2022/01/10/4ypeOKRalcLPTrW.png)  
+- 从头开始 - 事件函数-函数名称随意-地域国内随意 - 代码部署 - 运行环境选择Python3.7  
+![74FXSs.png](https://s4.ax1x.com/2022/01/23/74FXSs.png)  
 
 - 提交方法选择本地上传zip包 - 执行方法**默认不要改** - 函数代码上传刚刚下载的压缩包  
 ![image_1641823880776.png](https://s2.loli.net/2022/01/10/CNfU2OjkGDWSbKP.png) 
@@ -35,7 +35,7 @@
 **key栏中的字母全为小写 右边一栏才是你填的**
 :::  
 
-![image_1641824927711.png](https://s2.loli.net/2022/01/10/nVmWzYlE9bTUhiM.png)  
+![IMG_20220114_135201.png](https://s2.loli.net/2022/01/14/rcziwN8IVl2vAxT.png)  
 
 - 其他配置不变 - 展开触发器配置  
 选择自定义创建 - 触发方式：定时触发 - 触发周期：每一天
@@ -60,3 +60,16 @@
 ::: tip 提示
 如果你设置了Server酱推送，测试完也会收到推送消息哦~
 :::
+
+## 1.3如何升级云函数？  
+- 下载新版压缩包  
+- [Github](https://github.com/XiaoMiku01/bili-live-heart/releases/)
+- [百度云](https://pan.baidu.com/s/1CR4G6_59zzhASPwZR5wZcQ?pwd=soul) 提取码：soul   
+
+- 首先看你原来的旧版本函数的Python版本号，如果不为python3.7,请删除该函数，重新创建！！若为3.7继续往下看  
+[![qUa9kd.md.png](https://s1.ax1x.com/2022/03/26/qUa9kd.md.png)](https://imgtu.com/i/qUa9kd)
+
+- 进入创建的函数，选择函数代码，选择本地上传zip包  
+![image_1642090877940.png](https://s2.loli.net/2022/01/14/u1oMOR2CgqlcWA7.png)  
+
+- 点击部署即可，然后就可以测试了，无需重新配置函数和环境变量
