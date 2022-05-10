@@ -5,7 +5,7 @@ import logging
 import aiohttp
 from .api import WebApi, WebApiRequestError
 
-__VERSION__ = "1.2.0"
+__VERSION__ = "1.2.2"
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
