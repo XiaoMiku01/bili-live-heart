@@ -1,8 +1,17 @@
+<div align="center">
+<p align="center">
+<h1>官方公告</h1>
+<a href="https://imgtu.com/i/OWzr8I"><img src="https://s1.ax1x.com/2022/05/16/OWzr8I.png" alt="OWzr8I.png" border="0" width="400"/></a>
+</p>
+ </div>  
+ 
+---  
+
 <p align="center">
   <img src="https://s2.loli.net/2022/01/11/6OM8kDZpa5WLid4.png" width="200" height="200" alt="">
 </p>
 <div align="center">
-
+  
 # **Bilibili粉丝牌助手**  
 ### 当前版本：1.2.2
  </div>
