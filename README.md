@@ -1,7 +1,7 @@
 <div align="center">
 <p align="center">
-<h1>官方公告</h1>
-<a href="https://imgtu.com/i/OWzr8I"><img src="https://s1.ax1x.com/2022/05/16/OWzr8I.png" alt="OWzr8I.png" border="0" width="400"/></a>
+<h1>此版本已失效</h1>
+ <h2>新版仓库[ XiaoMiku01/fansMedalHelper ](https://github.com/XiaoMiku01/fansMedalHelper)</h2>
 </p>
  </div>  
  
