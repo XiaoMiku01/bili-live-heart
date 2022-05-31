@@ -1,8 +1,8 @@
 ---
 home: true
 heroImage: /logo.png
-heroText: 哔哩哔哩粉丝牌助手
-tagline: 全自动升级B站粉丝牌脚本——每日自动获取小心心并赠送
+heroText: 哔哩哔哩粉丝牌助手 此版本已失效
+tagline: 新版仓库 XiaoMiku01/fansMedalHelper
 actionText: 快速上手 →
 actionLink: /guide/
 features:
